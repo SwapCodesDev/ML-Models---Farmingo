@@ -46,7 +46,7 @@ def predict_crop_price(crop: str, region: str, date: str = None):
     return round(pred_price, 2)
 
 
-@app.post("/predict", response_model=CropPriceOutput)
+@app.post("/crop_price", response_model=CropPriceOutput)
 def predict(data: CropPriceInput):
     price = predict_crop_price(data.crop, data.region, data.date)
     return CropPriceOutput(
