@@ -1,0 +1,77 @@
+{
+  "Blight": {
+    "Cause": "Fungal disease (often Exserohilum turcicum) affecting maize leaves, surviving on crop residue and spreading by wind or rain-splash.",
+    "Symptoms": "Long, cigar-shaped grey-green to tan lesions on leaves, running parallel to leaf margins; lesions may coalesce to kill leaf tissues.",
+    "Precautions": [
+      "Remove or bury infected plant debris after harvest.",
+      "Use resistant hybrids and avoid continuous maize cropping.",
+      "Ensure good air circulation and avoid prolonged leaf wetness."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply foliar fungicide (e.g., propiconazole) at early symptoms.",
+        "Repeat spray at recommended intervals when weather conditions favour disease."
+      ],
+      "Organic": [
+        "Use crop rotation with non-host crops.",
+        "Encourage residue decomposition and avoid heavy inoculum build-up."
+      ]
+    }
+  },
+  "Common Rust": {
+    "Cause": "Fungal disease caused by Puccinia sorghi; spores travel by wind and infect maize under cool, wet conditions.",
+    "Symptoms": "Small, circular to elongated brown-reddish pustules (urediniospores) on both leaf surfaces; may develop yellow halo; in severe cases leaf chlorosis and death.",
+    "Precautions": [
+      "Select resistant hybrids and plant early to avoid peak spore arrival.",
+      "Maintain good field hygiene, eliminate alternate hosts if present.",
+      "Monitor crop regularly during humid/cool periods."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply fungicide when pustules first appear and conditions favour spread.",
+        "Use products with multiple modes of action to prevent resistance."
+      ],
+      "Organic": [
+        "Maintain crop vigor with proper nutrition and irrigation to reduce susceptibility.",
+        "Remove heavily infected plants if feasible to reduce inoculum."
+      ]
+    }
+  },
+  "Gray Leaf Spot": {
+    "Cause": "Fungal disease caused by Cercospora zeae‑maydis or Cercospora zeina; survives on maize residue and flourishes under warm humid conditions and poor tillage.",
+    "Symptoms": "Tan to brown rectangular lesions on lower leaves, parallel to veins; as disease progresses lesions turn greyish, elongate, and may cover entire leaves.",
+    "Precautions": [
+      "Use crop rotation and reduce conservation tillage to lower residue-borne inoculum.",
+      "Select hybrids with resistance, avoid continuous maize cropping.",
+      "Ensure proper spacing and ventilation; protect leaf area during grain-fill."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply foliar fungicide before large lesion development when disease pressure is high.",
+        "Ensure timely fungicide applications aligned with disease progression."
+      ],
+      "Organic": [
+        "Manage crop residue (bury or remove) to reduce inoculum load.",
+        "Improve plant health via balanced fertilisation and irrigation to reduce disease severity."
+      ]
+    }
+  },
+  "Healthy": {
+    "Cause": "No infection or physiological disorder detected; crop is growing under optimal conditions.",
+    "Symptoms": "Uniform green leaves, proper fruit/cob set, no visible lesions, spots or discoloration.",
+    "Precautions": [
+      "Maintain balanced nutrition and irrigation schedule.",
+      "Inspect regularly for early signs of disease or pests.",
+      "Keep tools and equipment clean; practise proper field hygiene."
+    ],
+    "Cure": {
+      "Chemical": [
+        "No treatment required; maintain preventive fungicide/insecticide schedule if local risk is high."
+      ],
+      "Organic": [
+        "Use organic amendments and compost to strengthen crop resilience.",
+        "Adopt integrated pest/disease management practices routinely."
+      ]
+    }
+  }
+}

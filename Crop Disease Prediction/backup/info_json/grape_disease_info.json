@@ -1,0 +1,134 @@
+{
+  "Bacterial Leaf Spot": {
+    "Cause": "Bacterial infection (often Xanthomonas spp.) attacking leaves and shoots of grapevines under warm-humid conditions.",
+    "Symptoms": "Small yellowish or water-soaked spots on leaves, which enlarge into brown lesions often with a yellow halo; may cause leaf drop or shoot die-back.",
+    "Precautions": [
+      "Use certified disease-free planting material.",
+      "Ensure canopy ventilation and avoid prolonged leaf wetness.",
+      "Sanitise pruning tools and remove infected plant material."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply copper-based bactericide sprays shortly after symptom onset.",
+        "Alternate contact and systemic bactericides to avoid resistance."
+      ],
+      "Organic": [
+        "Use neem oil or plant-derived bactericidal extracts as foliar preventive sprays.",
+        "Practice strict field sanitation and remove fallen infected leaves."
+      ]
+    }
+  },
+  "Black Rot": {
+    "Cause": "Fungal disease caused by Guignardia bidwellii; favoured by warm, humid weather and vine stress. :contentReference[oaicite:2]{index=2}",
+    "Symptoms": "Brown circular leaf spots, black ‘mummies’ of berries, fruit shrivelling and hardening; shoots and tendrils may also be infected. :contentReference[oaicite:3]{index=3}",
+    "Precautions": [
+      "Remove and destroy mummified berries and infected canes during dormant season.",
+      "Choose resistant cultivars, maintain good canopy airflow.",
+      "Avoid overhead irrigation and control humidity around the vine."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply preventive fungicides (e.g., sterol biosynthesis inhibitors) during susceptible stages. :contentReference[oaicite:4]{index=4}",
+        "Use contact fungicides immediately following rainfall when conditions favour infection."
+      ],
+      "Organic": [
+        "Use sulphur or copper-based organic treatments in combination with canopy management.",
+        "Improve vine health via balanced nutrition to reduce susceptibility."
+      ]
+    }
+  },
+  "Downy Mildew": {
+    "Cause": "Oomycete/fungal-type pathogen that attacks grape leaves, berries and shoots under cool, moist conditions; humidity and leaf wetness are key risk factors. :contentReference[oaicite:5]{index=5}",
+    "Symptoms": "Yellowish ‘oil-spots’ on upper leaf surface, greyish mould growth on underside of leaves; later leaves drop, berries may crack or are lost. :contentReference[oaicite:6]{index=6}",
+    "Precautions": [
+      "Ensure good drainage and avoid irrigation late in the day so leaves dry before night.",
+      "Maintain open canopy and remove excess foliage to reduce humidity.",
+      "Apply protectant sprays when conditions forecast heavy dew or rain."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Use systemic and protectant fungicides timed for bud-break and early leaf stage.",
+        "Repeat applications at intervals under extended wet weather."
+      ],
+      "Organic": [
+        "Use biocontrols such as Bacillus or Trichoderma species sprays.",
+        "Apply potassium bicarbonate or plant-based oils early as preventive measures."
+      ]
+    }
+  },
+  "ESCA": {
+    "Cause": "Complex trunk and wood disease in vines, caused by fungi such as Phaeomoniella chlamydospora and Phaeoacremonium aleophilum; stressed vines or improper pruning wounds increase susceptibility. :contentReference[oaicite:9]{index=9}",
+    "Symptoms": "Tiger-striping of leaves (yellow/brown bands), black streaks in wood, shoot die-back, shrivelled fruit; gradual vineyard decline. :contentReference[oaicite:10]{index=10}",
+    "Precautions": [
+      "Prune only in dry weather and seal pruning wounds promptly.",
+      "Disinfect pruning tools between vines, avoid over-watering and excessive nitrogen.",
+      "Use resistant rootstocks and avoid stressing vines during hot periods."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply fungicidal trunk pastes at pruning wounds containing tebuconazole or carbendazim.",
+        "Apply systemic fungicides during early growth when risk is detected."
+      ],
+      "Organic": [
+        "Use biological inoculants (e.g., Trichoderma harzianum) on wounds.",
+        "Improve soil health and compost application to enhance vine resistance.",
+        "Remove and burn heavily infected vines to reduce inoculum."
+      ]
+    }
+  },
+  "Healthy": {
+    "Cause": "No infection, pest or deficiency detected — vine is growing under favourable conditions.",
+    "Symptoms": "Uniform green foliage, no leaf spots or berry damage, good shoot growth and bunch set.",
+    "Precautions": [
+      "Maintain balanced irrigation and nutrient schedule.",
+      "Inspect regularly for early signs of stress or disease.",
+      "Keep tools and surrounding area clean to prevent introduction of pathogens."
+    ],
+    "Cure": {
+      "Chemical": [
+        "No specific treatment required; maintain preventive fungicide programs if climate risk is high."
+      ],
+      "Organic": [
+        "Apply mulch or compost to improve soil health, periodic neem oil sprays as preventive protection.",
+        "Ensure good canopy ventilation and avoid dense foliage build-up."
+      ]
+    }
+  },
+  "Leaf Blight": {
+    "Cause": "Fungal disease (e.g., Alternaria alternata) causing necrotic leaf lesions and can lead to defoliation when conditions are warm and humid. :contentReference[oaicite:12]{index=12}",
+    "Symptoms": "Yellowish spots along leaf margins that enlarge into brown patches with concentric rings; severe infection causes drying and defoliation of leaves. :contentReference[oaicite:13]{index=13}",
+    "Precautions": [
+      "Ensure proper canopy spacing, good ventilation and avoid leaf wetness overnight.",
+      "Remove and destroy infected leaves and berries to reduce inoculum.",
+      "Apply protectant sprays when weather favours infection."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Spray fungicides such as mancozeb, ziram, or Topsin-M during onset of lesions. :contentReference[oaicite:14]{index=14}",
+        "Alternate systemic and contact fungicides to combat resistance."
+      ],
+      "Organic": [
+        "Use biological fungicides and neem or garlic-based sprays.",
+        "Maintain proper nutrition and avoid over-fertilization which can predispose vines."
+      ]
+    }
+  },
+  "Powdery Mildew": {
+    "Cause": "Fungal disease caused by species such as Erysiphe necator (and related Oidium species) thriving in warm, dry conditions with high humidity and poor air circulation. :contentReference[oaicite:16]{index=16}",
+    "Symptoms": "White powdery fungal growth on leaf and stem surfaces; leaves may distort, turn brown and drop; fruit may be affected, reducing quality. :contentReference[oaicite:17]{index=17}",
+    "Precautions": [
+      "Ensure airflow and sunlight penetration, avoid dense canopy.",
+      "Apply fungicide pre-emptively when weather is favourable for infection.",
+      "Avoid excessive nitrogen which encourages lush growth prone to infection."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply systemic or contact fungicides such as tebuconazole or difenoconazole at early signs.",
+        "Use wettable sulphur as a preventive in organic systems."
+      ],
+      "Organic": [
+        "Apply sulphur dusting or biocontrols, use bicarbonate-based sprays, maintain canopy hygiene and reduce leaf wetness."
+      ]
+    }
+  }
+}

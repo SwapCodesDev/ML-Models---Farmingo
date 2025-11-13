@@ -1,0 +1,92 @@
+{   
+        "Cercospora Leaf Spot": {
+            "Cause": "Fungal disease caused by Cercospora capsici; survives on seeds, residues, and spreads by rain splash and wind in warm, humid conditions.",
+            "Symptoms": "Small brown circular spots with whitish or grey centres and dark rings ('frog-eye' pattern) on leaves; yellowing, leaf drop, and sometimes infection on fruit stalks.",
+            "Precautions": [
+            "Use certified disease-free seeds and planting material.",
+            "Ensure proper spacing and air circulation; avoid leaf wetness.",
+            "Remove and destroy infected plant debris."
+            ],
+            "Cure": {
+                "Chemical": [
+                    "Spray copper hydroxide, chlorothalonil, or mancozeb at first signs; repeat every 10–14 days.",
+                    "Seed treatment with captan (3 g/kg) helps reduce primary infection."],
+                "Organic": [
+                    "Avoid overhead irrigation to reduce leaf wetness.",
+                    "Mulch soil surface to minimize splash; maintain field hygiene."]
+            }
+        },
+
+        "Healthy": {
+            "Cause": "No infection or stress present; optimal growth maintained.",
+            "Symptoms": "Dark green, uniform leaves with healthy growth and fruit set.",
+            "Precautions": [
+                "Maintain balanced fertilization and irrigation schedule.",
+                "Inspect regularly for early pest or disease symptoms.",
+                "Keep tools and nearby fields clean to prevent contamination."],
+            "Cure": {
+                "Chemical": ["No treatment required; maintain preventive schedule during high-risk periods."],
+                "Organic": [
+                    "Monthly neem oil spray as preventive protection.",
+                    "Apply compost or vermicompost to boost soil health."]
+            }
+        },
+
+        "Murda Complex (Mites & Thrips)": {
+            "Cause": "Caused by thrips (Scirtothrips dorsalis) and mites (Polyphagotarsonemus latus) under warm, dry conditions with poor irrigation and high nitrogen use.",
+            "Symptoms": "Leaf curling, crinkling, silvery patches, bud drop, stunted growth, and deformed fruits.",
+            "Precautions": [
+                "Avoid excessive nitrogen fertilizer.",
+                "Maintain spacing and airflow; intercrop with barrier crops like maize or sorghum.",
+                "Remove and destroy heavily infested plants."],
+            "Cure": {
+                "Chemical": [
+                    "Use abamectin, spiromesifen, or fenpyroximate for mites.",
+                    "Use spinetoram or imidacloprid for thrips control."],
+                "Organic": [
+            "Spray neem oil or neem seed extract every 10 days.",
+            "Use predatory mites or sticky traps for early control."]
+            }
+        },
+
+        "Nutritional Deficiency": {
+            "Cause": "Imbalance or deficiency of major or micronutrients such as nitrogen, potassium, calcium, magnesium, zinc, or boron.",
+            "Symptoms": "Pale yellow leaves (N deficiency), leaf margin burn (K), blossom-end rot (Ca), or interveinal chlorosis (Mg).",
+            "Precautions": [
+                "Conduct soil testing before planting and fertilize accordingly.",
+                "Use balanced fertilization with both macro and micro nutrients.",
+                "Avoid overuse of any single nutrient, which can block others."],
+            "Cure": {
+                "Chemical": [
+                    "Apply nitrogen, potash, or calcium nitrate as per soil recommendations.",
+                    "Use foliar sprays of Zn, Mn, or Fe chelates for micronutrient deficiencies."],
+                "Organic": [
+                    "Use composted manure to balance soil nutrients.",
+                    "Apply vermicompost or biofertilizers to maintain microbial health."]
+                }
+        },
+  
+        "Powdery Mildew": {
+            "Cause": "Fungal disease caused by Leveillula taurica, favoured by moderate temperatures, high humidity, and poor air circulation.",
+            "Symptoms": "White powdery coating on leaves, stems, or fruits; leaf curling and premature leaf drop.",
+            "Precautions": [
+                "Ensure spacing and good ventilation.",
+                "Avoid excess nitrogen and overhead irrigation.",
+                "Remove infected leaves promptly."],
+            "Cure": {
+                "Chemical": [
+                    "Spray wettable sulfur (0.3%) or tebuconazole/difenoconazole at early stages.",
+                    "Repeat fungicide applications as per local guidelines if infection persists."],
+            "Organic": [
+                "Spray diluted milk (1:9 ratio) or neem oil fortnightly.",
+                "Maintain canopy hygiene and remove debris."]
+            }
+        }
+}
+
+
+
+
+
+
+

@@ -1,0 +1,150 @@
+{
+  "Bacterial Blight": {
+    "Cause": "Bacterial disease caused by Xanthomonas citri pv. malvacearum, spreading through infected seeds, rain splash, and mechanical injury. Warm, humid weather favors infection.",
+    "Symptoms": "Angular, water-soaked lesions appear on lower leaves, turning brown with yellow margins. Severe infection causes defoliation, boll rot, and reduced yield.",
+    "Precautions": [
+      "Use disease-free certified seeds.",
+      "Practice crop rotation with non-host crops for 2–3 years.",
+      "Avoid overhead irrigation and high plant density."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Seed treatment with Streptocycline (100 ppm) or copper oxychloride (0.3%).",
+        "Spray copper-based bactericides or Bordeaux mixture (1%) at early stages."
+      ],
+      "Organic": [
+        "Use compost teas or neem oil spray to enhance leaf resistance.",
+        "Remove and destroy infected crop residues post-harvest."
+      ]
+    }
+  },
+  "Curl Virus": {
+    "Cause": "Viral disease transmitted by whiteflies (Bemisia tabaci). High temperature and dry weather conditions enhance whitefly population.",
+    "Symptoms": "Upward or downward curling of leaves, thickening of veins, stunted plants, and small malformed bolls.",
+    "Precautions": [
+      "Grow whitefly-resistant varieties and avoid early sowing.",
+      "Monitor and control whitefly populations regularly.",
+      "Weed control and removal of alternate host plants are essential."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply imidacloprid (0.05%) or thiamethoxam (0.03%) for whitefly control.",
+        "Use insect growth regulators like buprofezin for sustainable control."
+      ],
+      "Organic": [
+        "Spray neem oil (3%) or neem seed kernel extract (5%) weekly.",
+        "Introduce natural predators like ladybird beetles and lacewings."
+      ]
+    }
+  },
+  "Healthy Leaf": {
+    "Cause": "No infection or physiological stress detected; indicates good crop management and environmental conditions.",
+    "Symptoms": "Uniform dark green leaves, no spots or deformities, proper plant height and boll formation.",
+    "Precautions": [
+      "Maintain balanced irrigation and fertilizer schedule.",
+      "Monitor regularly for early pest or disease signs.",
+      "Clean tools and equipment to prevent contamination."
+    ],
+    "Cure": {
+      "Chemical": [
+        "No chemical treatment required."
+      ],
+      "Organic": [
+        "Maintain soil fertility using compost and vermicompost.",
+        "Apply neem oil as a preventive bio-protection spray once per month."
+      ]
+    }
+  },
+  "Herbicide Growth Damage": {
+    "Cause": "Chemical injury caused by herbicide drift or over-application, especially with glyphosate or 2,4-D.",
+    "Symptoms": "Leaf curling, chlorosis, deformed new leaves, and stunted growth; symptoms mimic viral infections.",
+    "Precautions": [
+      "Avoid herbicide drift by using shielded sprayers and low wind speed applications.",
+      "Apply herbicides only at recommended doses and timings.",
+      "Avoid tank-mixing incompatible chemicals."
+    ],
+    "Cure": {
+      "Chemical": [
+        "No direct chemical cure; flush with irrigation water to reduce residue effects."
+      ],
+      "Organic": [
+        "Apply seaweed extract or humic acid to help plant recovery.",
+        "Enhance soil microbial activity with compost to detoxify residues."
+      ]
+    }
+  },
+  "Leaf Hopper Jassids": {
+    "Cause": "Caused by the sap-sucking insect Amrasca biguttula biguttula (cotton jassid). Warm and dry conditions favor its multiplication.",
+    "Symptoms": "Leaf margins turn yellow and curl downward (hopper burn); severe cases cause reddening, drying, and leaf drop.",
+    "Precautions": [
+      "Grow jassid-tolerant cotton varieties.",
+      "Use yellow sticky traps to monitor and reduce pest populations.",
+      "Avoid excessive nitrogen fertilizer that promotes tender leaves."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Spray imidacloprid (0.05%) or acetamiprid (0.004%) when pest count exceeds threshold.",
+        "Alternate insecticides to prevent resistance."
+      ],
+      "Organic": [
+        "Spray neem seed kernel extract (5%) or pongamia oil (2%) regularly.",
+        "Encourage natural predators like spiders and ladybird beetles."
+      ]
+    }
+  },
+  "Leaf Redding": {
+    "Cause": "Physiological disorder caused by phosphorus or magnesium deficiency, excess nitrogen, and pest stress (especially jassids).",
+    "Symptoms": "Leaves turn reddish-purple starting from the edges, reduced photosynthesis, and premature leaf fall.",
+    "Precautions": [
+      "Balance N:P:K fertilization according to soil tests.",
+      "Avoid excessive irrigation and nitrogen application.",
+      "Manage jassid and mite infestations promptly."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply single superphosphate or magnesium sulfate as per deficiency symptoms."
+      ],
+      "Organic": [
+        "Use compost or farmyard manure enriched with rock phosphate.",
+        "Apply foliar spray of seaweed extract or micronutrient mixture."
+      ]
+    }
+  },
+  "Leaf Variegation": {
+    "Cause": "Caused by irregular chlorophyll development due to genetic, nutrient, or viral factors; sometimes related to stress or environmental imbalance.",
+    "Symptoms": "Irregular light and dark green patches on leaves, usually not leading to severe yield loss unless viral in nature.",
+    "Precautions": [
+      "Ensure balanced nutrition, especially zinc and iron.",
+      "Avoid stress from drought or excess fertilizer.",
+      "Use disease-free seeds to prevent viral causes."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply chelated micronutrient foliar sprays (Zn, Fe, Mn) as per deficiency type."
+      ],
+      "Organic": [
+        "Use vermicompost and organic mulches to improve nutrient uptake.",
+        "Maintain proper soil moisture and avoid sudden stress."
+      ]
+    }
+  },
+  "Fusarium Wilt": {
+    "Cause": "Fungal disease caused by Fusarium oxysporum f. sp. vasinfectum; survives in soil and enters roots through wounds or stress points.",
+    "Symptoms": "Wilting of lower leaves, yellowing, dark brown vascular discoloration inside stems, and plant death in severe cases.",
+    "Precautions": [
+      "Use wilt-resistant cotton varieties.",
+      "Rotate with non-host crops for 3–4 years.",
+      "Avoid over-irrigation and maintain soil drainage."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Soil drenching with carbendazim (0.1%) or thiophanate-methyl before planting.",
+        "Treat seeds with Trichoderma formulation before sowing."
+      ],
+      "Organic": [
+        "Apply Trichoderma-enriched compost in planting furrows.",
+        "Maintain soil health with organic matter and biofertilizers."
+      ]
+    }
+  }
+}

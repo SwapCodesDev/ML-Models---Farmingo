@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import List, Dict
 
 # Crop Price Prediction Models
 
@@ -15,21 +16,44 @@ class CropPriceOutput(BaseModel):
 
 # Weather Data Models
 
-class WeatherDataInput(BaseModel):
-    location: str
-    date: str  # ISO format date string
+class CropRequest(BaseModel):
+    auto_location: bool
+    latitude: float
+    longitude: float
 
-class WeatherDataOutput(BaseModel):
+
+class WeatherSoilData(BaseModel):
+    N: float
+    P: float
+    K: float
     temperature: float
     humidity: float
-    precipitation: float
+    ph: float
+    rainfall: float
 
-# Crop Disease Detection Models
 
-class CropDiseaseInput(BaseModel):
-    crop: str
-    symptoms: str  # Description of symptoms observed
+class CropResponse(BaseModel):
+    status: str
+    coords: dict
+    weather: WeatherSoilData
+    predicted_crop: str
+    predicted_score: float
+    fully_suitable: list
+    partially_suitable: list
+    state: str
+    season_code: int
 
-class CropDiseaseOutput(BaseModel):
-    disease: str
+# Crop disease Models
+
+
+class DiseaseRequest(BaseModel):
+    crop_name: str
+
+
+class DiseaseResponse(BaseModel):
+    predicted_disease: str
     confidence: float
+    cause: str
+    symptoms: str
+    precautions: List[str]
+    cure: Dict[str, List[str]]  # { "Chemical": [], "Organic": [] }

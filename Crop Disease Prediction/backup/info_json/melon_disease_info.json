@@ -1,0 +1,76 @@
+{
+  "Anthracnose": {
+    "Cause": "Fungal disease caused by species of Colletotrichum (e.g., C. orbiculare) in cucurbit crops; thrives under warm, humid or rainy conditions, may be seed-borne or soil/plant debris borne.",
+    "Symptoms": "Small yellow or water-soaked spots on leaves that enlarge and turn dark brown with possible concentric rings; fruit and stems may also show sunken dark lesions causing rot.",
+    "Precautions": [
+      "Use certified disease-free seed or transplants.",
+      "Rotate crops with non-hosts for 2-3 seasons; remove infected debris.",
+      "Avoid overhead irrigation and reduce leaf wetness by increasing air circulation."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply fungicides (e.g., mancozeb or carbendazim) at early onset of lesions and repeat under favourable conditions.",
+        "Ensure coverage of leaves, stems and fruit where appropriate."
+      ],
+      "Organic": [
+        "Use bio-fungicides or plant-derived extracts (e.g., neem or Trichoderma-based) as preventive sprays.",
+        "Maintain soil health and avoid crop stress to reduce susceptibility."
+      ]
+    }
+  },
+  "Downy_Mildew": {
+    "Cause": "Oomycete/fungal-type pathogen such as Pseudoperonospora cubensis affecting cucurbits; favoured by high humidity, leaf wetness and moderate temperatures.",
+    "Symptoms": "On upper surfaces: pale green or yellow spots that turn brown; on undersides: gray to purple fuzzy or downy growth of sporangia; leaves may curl upward, wilt and die, leading to defoliation.",
+    "Precautions": [
+      "Ensure good canopy ventilation and avoid prolonged leaf wetness (especially overnight irrigation).",
+      "Monitor forecasts of spore movement and apply protectant sprays pre-emptively when conditions are favourable.",
+      "Remove older infected leaves, avoid planting near sources of inoculum."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Use protectant fungicides early (before symptoms) under high-risk conditions; alternate modes of action to prevent resistance.",
+        "Repeat sprays at intervals according to disease pressure and weather."
+      ],
+      "Organic": [
+        "Use biocontrol agents or potassium-based compounds as preventive measures.",
+        "Maintain healthy plants via fertilisation and irrigation so they recover better from infection."
+      ]
+    }
+  },
+  "Healthy": {
+    "Cause": "No pathogenic infection or physiological disease detected; crop growing under optimal conditions.",
+    "Symptoms": "Uniform green leaves, no lesions, proper vine and fruit development, no distortion or necrosis.",
+    "Precautions": [
+      "Maintain balanced watering and fertilisation regime.",
+      "Inspect regularly for early signs of pests, diseases or nutrient deficiencies.",
+      "Keep tools and surroundings clean to prevent introduction of pathogens."
+    ],
+    "Cure": {
+      "Chemical": [
+        "No treatment required; focus on preventive programmes under high-risk seasons."
+      ],
+      "Organic": [
+        "Use compost or vermicompost to enrich soil, apply neem oil or plant-extract sprays periodically as preventive protection.",
+        "Ensure plant vigour by avoiding stress (heat, drought, nutrient imbalance)."
+      ]
+    }
+  },
+  "Mosaic_Virus": {
+    "Cause": "Viral disease such as Watermelon mosaic virus (WMV) or other potyviruses/viruses that infect melons; spread by aphids or other insect vectors, or via infected seed or mechanically.",
+    "Symptoms": "Mosaic or mottled pattern of light and dark green on leaves, leaf distortion, stunted growth, fruit deformity or reduction in yield/quality.",
+    "Precautions": [
+      "Use virus-free seed and resistant varieties where available.",
+      "Control aphid and other vector populations early; remove alternate host weeds.",
+      "Sanitise equipment and avoid moving from infected to clean fields."
+    ],
+    "Cure": {
+      "Chemical": [
+        "No direct chemical cure for the virus itself; focus on controlling vectors and secondary infections."
+      ],
+      "Organic": [
+        "Use reflective mulches or barrier crops to reduce aphid landing.",
+        "Encourage natural predators of vectors (e.g., parasitic wasps, ladybugs) and maintain plant health via organic amendments."
+      ]
+    }
+  }
+}

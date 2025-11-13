@@ -1,0 +1,95 @@
+{
+  "ALTERNARIA LEAF SPOT": {
+    "Cause": "Fungal disease caused by Alternaria spp., favoured by warm, humid conditions and poor field hygiene.",
+    "Symptoms": "Small brown to dark brown spots on leaves which enlarge and develop concentric ring patterns; may lead to defoliation if severe.",
+    "Precautions": [
+      "Use disease-free seed and clean planting material.",
+      "Ensure good crop rotation and destroy infected plant debris.",
+      "Maintain optimal spacing and avoid dense canopy to reduce humidity."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply fungicides (e.g., chlorothalonil, mancozeb) at early appearance of spots.",
+        "Repeat at recommended intervals under high disease pressure."
+      ],
+      "Organic": [
+        "Use neem oil or plant‐derived antifungal sprays as preventive measure.",
+        "Increase soil organic matter and use compost teas to improve plant defence."
+      ]
+    }
+  },
+  "HEALTHY": {
+    "Cause": "No disease or pest stress detected; plant is under favourable growth conditions.",
+    "Symptoms": "Uniform green foliage, normal leaf size and shape, no spots or lesions, and good pod set.",
+    "Precautions": [
+      "Maintain balanced fertilisation and irrigation schedule.",
+      "Inspect field regularly for early signs of disease or pest attack.",
+      "Keep tools and equipment clean to avoid introducing pathogens."
+    ],
+    "Cure": {
+      "Chemical": [
+        "No treatment needed; focus on preventive schedule."
+      ],
+      "Organic": [
+        "Apply organic manure or vermicompost to maintain soil health.",
+        "Use neem or other botanical sprays periodically as a preventive measure."
+      ]
+    }
+  },
+  "LEAF SPOT (EARLY AND LATE)": {
+    "Cause": "Fungal diseases: Early leaf spot caused by Cercospora arachidicola and Late leaf spot caused by Cercosporidium personatum. These pathogens survive on crop residue and infect under warm, humid or wet conditions. :contentReference[oaicite:3]{index=3}",
+    "Symptoms": "Lesions appear on lower leaves first. Early leaf spot: brown circular spots with yellow halo; Late leaf spot: dark brown to black spots, often on both surfaces, may have tufts of spores underneath. Defoliation can occur when leaves coalesce. :contentReference[oaicite:4]{index=4}",
+    "Precautions": [
+      "Rotate groundnut with non-host crops and bury or remove infected residue.",
+      "Use resistant varieties if available, avoid continuous groundnut cropping.",
+      "Ensure proper spacing, reduce leaf wetness by irrigating appropriately."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply foliar fungicides (e.g., chlorothalonil, tebuconazole) at first signs and during favourable weather for disease.",
+        "Follow label instructions and alternate modes of action to avoid resistance."
+      ],
+      "Organic": [
+        "Use bio-fungicides or compost‐based sprays early in disease cycle.",
+        "Maintain plant vigour through good nutrition so plants better withstand infection."
+      ]
+    }
+  },
+  "ROSETTE": {
+    "Cause": "Viral disease complex known as Groundnut rosette disease; transmitted by aphids (e.g., Aphis craccivora) and often associated with satellite RNAs. Particularly damaging in sub-Saharan Africa. :contentReference[oaicite:7]{index=7}",
+    "Symptoms": "Severe stunting, yellowing or chlorosis of leaves, bushy appearance, malformed pods or no pods in young plants. High yield losses possible. :contentReference[oaicite:8]{index=8}",
+    "Precautions": [
+      "Use resistant or tolerant cultivars and control aphid vectors early.",
+      "Remove volunteer plants and alternate host plants that may harbour the virus.",
+      "Maintain plant health through balanced nutrition and avoid stress."
+    ],
+    "Cure": {
+      "Chemical": [
+        "No specific antiviral chemicals; focus is on vector control and cultural methods."
+      ],
+      "Organic": [
+        "Use reflective mulches or barrier crops to reduce aphid landing.",
+        "Encourage natural enemies of aphids and maintain plant vigour with organic amendments."
+      ]
+    }
+  },
+  "RUST": {
+    "Cause": "Fungal disease called Puccinia arachidis (groundnut rust); thrives in warm, humid conditions and causes major yield losses. :contentReference[oaicite:10]{index=10}",
+    "Symptoms": "Reddish to orange pustules appear on the undersides of leaves, later turning brown; severe infection leads to leaf drop, reduced photosynthetic area and smaller pods.",
+    "Precautions": [
+      "Use rust‐resistant varieties where available and apply effective crop rotation.",
+      "Avoid overlapping groundnut cropping, manage volunteer plants, ensure good field hygiene.",
+      "Apply fungicide preventively when weather is favourable for rust development."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply appropriate foliar fungicides according to local recommendations when pustules first appear.",
+        "Repeat as required when weather is hot, wet and disease pressure is high."
+      ],
+      "Organic": [
+        "Spray biocontrol fungicides or botanical extracts early in the crop cycle.",
+        "Maintain plant health with good organic nutrient supply to reduce susceptibility."
+      ]
+    }
+  }
+}

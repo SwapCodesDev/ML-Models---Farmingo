@@ -1,0 +1,172 @@
+{
+  "Bacterial_spot": {
+    "Cause": "Bacterial disease caused by Bacterial spot (Xanthomonas spp.) under warm, wet conditions; seed-borne and spread by rain splash and contaminated tools. :contentReference[oaicite:2]{index=2}",
+    "Symptoms": "Small water-soaked circular spots on leaves turning dark brown with yellow halo; raised or scab-like spots on fruit. :contentReference[oaicite:3]{index=3}",
+    "Precautions": [
+      "Use certified disease-free seed or transplants.",
+      "Avoid overhead irrigation and minimise leaf wetness duration.",
+      "Disinfect greenhouse/field tools and avoid handling wet plants."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply copper-based bactericides early in disease development. :contentReference[oaicite:4]{index=4}"
+      ],
+      "Organic": [
+        "Eliminate infected plants, practise crop rotation, maintain good airflow."
+      ]
+    }
+  },
+  "Early_blight": {
+    "Cause": "Fungal disease caused by Early blight (Alternaria solani or A. tomatophila) that survives in crop debris and infects tomato foliage and fruit under warm, humid conditions. :contentReference[oaicite:6]{index=6}",
+    "Symptoms": "Dark brown spots with concentric rings (‘target-like’) on older leaves near soil line; leaves yellow & drop; fruit may have leathery sunken spots. :contentReference[oaicite:7]{index=7}",
+    "Precautions": [
+      "Mulch soil and avoid contact between foliage and soil.",
+      "Space plants well to enhance air circulation, and remove lower leaves near soil.",
+      "Rotate crops and destroy infected plant debris."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Fungicide applications at first sign of lesions; follow label instructions."
+      ],
+      "Organic": [
+        "Use organic fungicidal sprays, compost and healthy-plant practices."
+      ]
+    }
+  },
+  "Late_blight": {
+    "Cause": "Oomycete disease caused by Late blight (Phytophthora infestans) favoured by cool, moist weather; rapidly destructive to leaves, stems and fruit. :contentReference[oaicite:9]{index=9}",
+    "Symptoms": "Water-soaked irregular lesions on leaves often with white sporulation underneath; dark lesions on fruit, rapid plant collapse. :contentReference[oaicite:10]{index=10}",
+    "Precautions": [
+      "Avoid planting tomato near potato crops in high-risk regions.",
+      "Ensure good drainage and avoid overhead watering; remove infected plants immediately.",
+      "Monitor weather and apply protectant fungicides pre-emptively."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply protectant/systemic fungicides early; repeat under wet conditions."
+      ],
+      "Organic": [
+        "Remove and destroy infected foliage and fruit; use resistant varieties."
+      ]
+    }
+  },
+  "Leaf_Mold": {
+    "Cause": "Fungal disease commonly called Leaf mold in tomato (caused by Passalora fulva formerly Fulvia fulva) that develops under high humidity and dew, especially in greenhouse or sheltered conditions.",
+    "Symptoms": "Yellow patches on upper leaf surface, greenish or olive-gray felt on underside, leaves may curl and drop; fruit may remain unaffected initially.",
+    "Precautions": [
+      "Ensure good ventilation in greenhouse, avoid high humidity and condensation on leaves.",
+      "Water at soil level, avoid wetting foliage; remove affected leaves early.",
+      "Sanitise greenhouse and avoid reuse of infected equipment or surfaces."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Fungicide sprays effective against leaf mold; apply at first signs."
+      ],
+      "Organic": [
+        "Maintain moderate humidity, remove infected leaves and practise sanitation."
+      ]
+    }
+  },
+  "Septoria_leaf_spot": {
+    "Cause": "Fungal disease caused by Septoria leaf spot (Septoria lycopersici) that overwinters in debris and infects lower leaves under warm, wet conditions. :contentReference[oaicite:13]{index=13}",
+    "Symptoms": "Small, circular grey spots with dark margins on lower leaves; black fruiting bodies (pycnidia) often visible; leaves turn yellow and drop. :contentReference[oaicite:14]{index=14}",
+    "Precautions": [
+      "Avoid overhead irrigation; mulch soil; remove and destroy affected lower leaves.",
+      "Ensure good spacing and airflow; rotate crops away from tomato or nightshades.",
+      "Clean stakes, cages and supports between seasons."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply fungicide when large number of lower leaves are infected; reduce canopy density."
+      ],
+      "Organic": [
+        "Use compost mulch and organic sprays; practise sanitation and rotate crops."
+      ]
+    }
+  },
+  "Spider_mites": {
+    "Cause": "Infestation by two-spotted spider mite (Tetranychus urticae) or other mite species, not a pathogen but a pest causing leaf damage and predisposition to disease.",
+    "Symptoms": "Fine webbing on undersides of leaves, stippling or yellowing of leaves, leaf curling, leaf drop, reduced vigor and yield.",
+    "Precautions": [
+      "Monitor underside of leaves for mites; use miticide or biological control when threshold exceeded.",
+      "Maintain good plant vigor with proper water and nutrient supply; avoid excess heat and dryness which favour mites.",
+      "Encourage predatory mites and spiders, keep greenhouse environment stable."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply selective miticides or insecticidal oils according to label."
+      ],
+      "Organic": [
+        "Spray neem oil or insecticidal soap; introduce predatory mites; ensure good humidity management."
+      ]
+    }
+  },
+  "Target_Spot": {
+    "Cause": "Fungal disease known as Target spot (Corynespora cassiicola) in tomato that creates distinct round lesions often with light centre and dark border; infections come from old crop debris and high humidity in protected environments.",
+    "Symptoms": "Round brown lesions on leaves and stems with light central zone and dark border (‘target’ appearance); lesions may merge and cause large dead patches; fruit may show sunken spots. ",
+    "Precautions": [
+      "Remove old debris and practise crop rotation; avoid dense planting and ensure airflow.",
+      "Space plants and manage humidity; disinfect supports and tools.",
+      "Irrigate at the base and avoid water splash from soil to leaves."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply fungicide at early onset and repeat under favourable conditions for disease spread."
+      ],
+      "Organic": [
+        "Use bio-fungicide sprays early; maintain healthy plant growth and remove infected material."
+      ]
+    }
+  },
+  "Tomato_mosaic_virus": {
+    "Cause": "Viral disease caused by Tomato mosaic virus (ToMV) transmitted via seed, tools and handling; causes mottling and deformation in tomato plants. :contentReference[oaicite:17]{index=17}",
+    "Symptoms": "Mottled yellow and dark green leaves, blister-like raised patches, leaf distortion, stunting, fruit may have necrotic spots or internal browning. :contentReference[oaicite:18]{index=18}",
+    "Precautions": [
+      "Use virus-free seed; sanitise tools and hands; restrict tobacco handling near tomatoes.",
+      "Remove and destroy infected plants; avoid planting near infected crops.",
+      "Practice good hygiene in greenhouse or field operations."
+    ],
+    "Cure": {
+      "Chemical": [
+        "No cure once infected; focus on prevention and removal of infected plants."
+      ],
+      "Organic": [
+        "Use resistant varieties, maintain plant vigor and practise strict sanitation."
+      ]
+    }
+  },
+  "Yellow_Leaf_Curl_Virus": {
+    "Cause": "Viral disease caused by Tomato yellow leaf curl virus (TYLCV) transmitted by whitefly (Bemisia tabaci); highly damaging especially in tropical/sub-tropical regions. :contentReference[oaicite:20]{index=20}",
+    "Symptoms": "New leaves small, thicken, curl upward and inward; leaves pale or yellow between veins; plants stunted, yields drastically reduced though fruits may appear few or deformed. :contentReference[oaicite:21]{index=21}",
+    "Precautions": [
+      "Use whitefly-free transplants, screen greenhouses and monitor whitefly populations.",
+      "Use reflective mulches or barrier crops; remove weeds and alternate whitefly hosts.",
+      "Use resistant varieties where available; practise crop rotation and isolation of new plantings."
+    ],
+    "Cure": {
+      "Chemical": [
+        "No curative chemical for virus; manage vector and remove infected plants promptly."
+      ],
+      "Organic": [
+        "Use biocontrol for whiteflies, use reflective mulches; maintain plant health and avoid stress."
+      ]
+    }
+  },
+  "healthy": {
+    "Cause": "No major disease, pest or physiological stress detected; plant is growing under optimal conditions.",
+    "Symptoms": "Uniform green leaves with no lesions, good branching and fruit set, no visible spots or deformities.",
+    "Precautions": [
+      "Maintain good soil fertility and balanced irrigation.",
+      "Inspect regularly for early signs of pests or disease; practise crop hygiene and rotate crops.",
+      "Ensure proper spacing, support plants and avoid plant stress."
+    ],
+    "Cure": {
+      "Chemical": [
+        "No treatment required other than standard preventive care."
+      ],
+      "Organic": [
+        "Use compost or vermicompost for soil health; apply neem or botanical sprays periodically as preventive protection."
+      ]
+    }
+  }
+}

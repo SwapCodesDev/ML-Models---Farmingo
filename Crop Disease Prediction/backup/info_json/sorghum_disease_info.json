@@ -1,0 +1,104 @@
+{
+  "Cereal Grain molds": {
+    "Cause": "Complex of fungal pathogens (e.g., Fusarium spp., Alternaria spp., Curvularia spp.) infecting sorghum grain during flowering and grain‐fill, especially under warm humid or rainy conditions. :contentReference[oaicite:0]{index=0}",
+    "Symptoms": "Grains become discoloured (white, pink, grey or black), low grain quality and viability; panicles may show moldy growth. :contentReference[oaicite:1]{index=1}",
+    "Precautions": [
+      "Use mould‐free seed, harvest promptly when maturity is reached.",
+      "Avoid late flowering under humid conditions; ensure good air circulation around panicles.",
+      "Rotate sorghum with non‐host crops and manage residues."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply appropriate seed treatments and fungicide sprays at flowering if high risk identified."
+      ],
+      "Organic": [
+        "Improve plant health via good nutrition and avoid stress; use cleanliness and residue management to reduce inoculum."
+      ]
+    }
+  },
+  "Covered Kernel smut": {
+    "Cause": "Fungal disease caused by smut fungi that replace kernels with masses of spores, often in kernels covered by plant tissues. :contentReference[oaicite:2]{index=2}",
+    "Symptoms": "Kernels appear normal until heading, then swell and become covered by a membrane containing dark spore masses; infected grains may burst at harvest.",
+    "Precautions": [
+      "Use certified seed and treat seed before planting.",
+      "Avoid planting in infested fields repeatedly; rotate crops with non‐hosts.",
+      "Sanitise equipment and remove infected crop debris."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Seed treatment with systemic fungicide effective against smut organisms."
+      ],
+      "Organic": [
+        "Use clean seed, practise crop rotation, and remove and burn infected plants soon after detection."
+      ]
+    }
+  },
+  "Head Smut": {
+    "Cause": "Fungal disease (e.g., Sphacelotheca reiliana) affecting sorghum panicles where the inflorescence is replaced by smut mass of spores. :contentReference[oaicite:3]{index=3}",
+    "Symptoms": "Panicles are distorted or replaced by black powdery spore masses; may appear at maturity as dark smutty heads instead of normal grain heads.",
+    "Precautions": [
+      "Use resistant varieties and treat seed with recommended fungicide.",
+      "Avoid planting in fields known to carry inoculum; rotate crop with non‐host species.",
+      "Manage volunteer plants and grasses that may harbour disease."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Seed treatment with a recommended fungicide effective against head smut."
+      ],
+      "Organic": [
+        "Use disease‐free seed, burn or deep‐bury infected residue, and rotate with non‐host crops."
+      ]
+    }
+  },
+  "Red Rot": {
+    "Cause": "Fungal disease (for example caused by Colletotrichum graminicola) which can cause both leaf spot (anthracnose) and red‐rot of stalks under warm, humid conditions. :contentReference[oaicite:4]{index=4}",
+    "Symptoms": "Leaves show small red or purple spots that expand; stalks internally show red/orange discoloration and may rot, causing lodging and reduced yield.",
+    "Precautions": [
+      "Use resistant hybrids where available.",
+      "Rotate crops and manage crop debris; ensure good drainage and avoid excessive nitrogen that favors disease.",
+      "Inspect stalks at harvest for early detection of internal rot."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Foliar fungicide application during early disease onset; systemic fungicides for stalk rot may be applied if local guidelines allow."
+      ],
+      "Organic": [
+        "Use healthy seed and deep‐bury or remove infected residue; maintain plant health and avoid stress to reduce disease susceptibility."
+      ]
+    }
+  },
+  "Rust": {
+    "Cause": "Fungal disease caused by Puccinia spp. (e.g., Puccinia purpurea) infecting sorghum leaves under favourable warm, humid conditions. :contentReference[oaicite:5]{index=5}",
+    "Symptoms": "Small reddish‐brown pustules on leaf surfaces, may coalesce to cause leaf‐area loss, reduce photosynthesis and grain fill.",
+    "Precautions": [
+      "Plant resistant varieties and monitor crop regularly during humid periods.",
+      "Avoid dense plantings; ensure good airflow and remove volunteer hosts.",
+      "Fungicide sprays may be timed when pustules first appear or weather favours spread."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply foliar fungicides with proven efficacy against rust when threshold reached."
+      ],
+      "Organic": [
+        "Maintain plant vigour via good nutrition and avoid stress; remove heavily infected plants if feasible."
+      ]
+    }
+  },
+  "Loose Smut": {
+    "Cause": "Fungal disease where spikes or grains are replaced by masses of loose spores, caused by smut fungi such as Sphacelotheca cruenta in sorghum. :contentReference[oaicite:6]{index=6}",
+    "Symptoms": "Inflorescence or grain head appears initially normal then bursts open at maturity releasing loose black spores; affected plants may be stunted and yield reduced.",
+    "Precautions": [
+      "Use certified disease‐free seed and treat dated seed with suitable fungicide before planting.",
+      "Avoid harvesting from infected fields and remove infected plants from the crop.",
+      "Clean field equipment and practise crop rotation."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Seed treatment with appropriate fungicide to eliminate seed‐borne smut inoculum."
+      ],
+      "Organic": [
+        "Source smut‐free seed, destroy infected plants and maintain strict hygiene in seed handling."
+      ]
+    }
+  }
+}

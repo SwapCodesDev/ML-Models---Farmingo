@@ -1,0 +1,86 @@
+{
+  "BlackPoint": {
+    "Cause": "A condition (often fungal-associated) in wheat kernels where the embryo end becomes dark brown to black; favoured by high humidity, delayed harvest or harvest-moisture stress. :contentReference[oaicite:1]{index=1}",
+    "Symptoms": "Dark brown to black discoloration at the embryo end of kernels; shrivelled or degraded grain quality; may reduce seed germination. :contentReference[oaicite:2]{index=2}",
+    "Precautions": [
+      "Harvest promptly and avoid delays when grain moisture remains high.",
+      "Use well-drained and ventilated storage to avoid fungal colonisation. :contentReference[oaicite:3]{index=3}",
+      "Use disease-free seed and treat seed when needed."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Seed treatments with appropriate fungicides when seed lots show black point infection. :contentReference[oaicite:4]{index=4}"
+      ],
+      "Organic": [
+        "Ensure good field hygiene and avoid conditions of delayed harvest or heavy rain during maturity."
+      ]
+    }
+  },
+  "FusariumFootRot": {
+    "Cause": "Fungal disease complex often involving species of Fusarium (e.g., Fusarium graminearum) causing root, crown or foot rot in wheat, especially under continuous cropping, dry soil stress and residue-borne inoculum. :contentReference[oaicite:5]{index=5}",
+    "Symptoms": "Dark brown lesions on stem base or sub-crown internode; plants stunted or prematurely dying; patches of weakened plants in field. :contentReference[oaicite:6]{index=6}",
+    "Precautions": [
+      "Rotate crops and avoid continuous wheat on same field.",
+      "Use well-drained soils and avoid drought or seedbed stress at emergence.",
+      "Use certified seed and consider fungicide seed treatment when risk is high."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Use seed treatment fungicides designed for root/foot-rot pathogens."
+      ],
+      "Organic": [
+        "Increase soil organic matter to improve root health and reduce stress-related susceptibility."
+      ]
+    }
+  },
+  "HealthyLeaf": {
+    "Cause": "No major disease or pest stress detected; wheat plants growing under favourable conditions.",
+    "Symptoms": "Green uniform leaves, no necrotic lesions or discolouration; good tillering and healthy grain set.",
+    "Precautions": [
+      "Maintain balanced fertilisation and irrigation.",
+      "Monitor regularly and keep field hygiene to avoid introducing pathogens."
+    ],
+    "Cure": {
+      "Chemical": [
+        "No treatment required — maintain preventive programmes."
+      ],
+      "Organic": [
+        "Use compost or organic amendment to support soil health; maintain good crop rotation."
+      ]
+    }
+  },
+  "LeafBlight": {
+    "Cause": "Foliar diseases of wheat (often a complex including spot blotch, tan spot, other fungal pathogens) causing necrotic lesions on leaves under warm, humid conditions. :contentReference[oaicite:7]{index=7}",
+    "Symptoms": "Elongated brown to dark brown blotches or spots on leaves; may cause premature leaf drop, reduced photosynthesis and yield loss.",
+    "Precautions": [
+      "Ensure good plant spacing for air flow and reduce leaf wetness duration.",
+      "Rotate crops and remove crop residues to lower inoculum.",
+      "Use resistant varieties where available."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply fungicides early when lower leaves show lesions and weather conditions favour spread."
+      ],
+      "Organic": [
+        "Remove infected leaves, maintain strong plant health via fertilisation and avoid stress."
+      ]
+    }
+  },
+  "WheatBlast": {
+    "Cause": "Aggressive fungal disease caused by Magnaporthe oryzae Triticum pathotype (MoT) in wheat; spreads via infected seed, crop residue and airborne spores; favoured by warm, humid weather around flowering. :contentReference[oaicite:9]{index=9}",
+    "Symptoms": "Bleached or shrivelled heads, dark lesions on spikes, grain shrivelling within a week of infection; rapid crop collapse in epidemic. :contentReference[oaicite:10]{index=10}",
+    "Precautions": [
+      "Use certified disease-free seed and avoid fields with history of blast.",
+      "Plant early to avoid peak conditions favourable for disease; monitor weather risk.",
+      "Rotate with non-wheat crops and avoid reservoir grasses or volunteer wheat."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Chemical control is limited; fungicide applied at heading may reduce severity but is not wholly reliable."
+      ],
+      "Organic": [
+        "Emphasise quarantine and removal of infected plants; adopt resistant varieties if available."
+      ]
+    }
+  }
+}

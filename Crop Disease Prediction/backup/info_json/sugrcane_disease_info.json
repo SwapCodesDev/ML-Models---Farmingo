@@ -1,0 +1,91 @@
+{
+  "Healthy": {
+    "Cause": "No infection or serious stress detected; plants are under optimal growth conditions.",
+    "Symptoms": "Uniform green leaves, normal cane growth, no visible lesions or discolouration, good internode development and sugar content.",
+    "Precautions": [
+      "Maintain balanced irrigation and fertilisation schedule.",
+      "Inspect regularly for any early disease or pest signs.",
+      "Ensure good field hygiene, clean equipment, remove volunteer or weed hosts."
+    ],
+    "Cure": {
+      "Chemical": [
+        "No specific chemical treatment required; maintain preventive programs."
+      ],
+      "Organic": [
+        "Apply compost or organic manure to maintain soil health.",
+        "Use crop rotation and proper field sanitation to prevent introduction of disease."
+      ]
+    }
+  },
+  "Mosaic": {
+    "Cause": "Viral disease caused by viruses such as Sugarcane mosaic virus (SCMV) infecting the cane; transmitted by aphids and mechanical means. :contentReference[oaicite:2]{index=2}",
+    "Symptoms": "Irregular yellow and green mottling or streaks (mosaic pattern) on leaves; stunted growth; in severe infection leaves may turn yellow or pale and new leaves may be twisted. :contentReference[oaicite:3]{index=3}",
+    "Precautions": [
+      "Use virus-free seed cane and certified planting material.",
+      "Control aphid vectors and sanitise tools and equipment between fields.",
+      "Remove or avoid planting in fields with history of mosaic virus or volunteer hosts."
+    ],
+    "Cure": {
+      "Chemical": [
+        "There is no direct chemical cure for the virus; management focuses on vector control and resistant varieties."
+      ],
+      "Organic": [
+        "Encourage natural enemies of aphids, apply reflective mulches to reduce vector landing.",
+        "Maintain plant health with organic amendments so that cane tolerates infection better."
+      ]
+    }
+  },
+  "RedRot": {
+    "Cause": "Fungal disease caused by pathogens such as Colletotrichum falcatum (also called Glomerella tucumanensis in perfect stage); thrives under monocropping, ratoon cropping and poor drainage. :contentReference[oaicite:5]{index=5}",
+    "Symptoms": "Young leaves may turn pale, droop; canes show red or blood-red discoloration in the vascular region and pith, internal rotting, cane may collapse; sometimes alcoholic smell in infected stalks. :contentReference[oaicite:6]{index=6}",
+    "Precautions": [
+      "Use resistant sugarcane varieties and clean seed cane.",
+      "Rotate crops and avoid successive ratoon crops in same field.",
+      "Ensure good drainage and remove or burn infected cane and debris."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply appropriate fungicide treatments when prescribed locally; seed cane treatment may help in some regions."
+      ],
+      "Organic": [
+        "Ensure soil health, compost application, biological amendments to improve cane strength.",
+        "Remove infected plants and apply rigorous sanitation."
+      ]
+    }
+  },
+  "Rust": {
+    "Cause": "Fungal disease caused by Puccinia melanocephala (brown or common rust of sugarcane); favourable in warm, humid conditions. :contentReference[oaicite:8]{index=8}",
+    "Symptoms": "Tiny elongated yellow-green spots initially on leaves; later turn orange-reddish-brown pustules, which when touched may release brownish powder; heavy infection leads to leaf-area loss and reduced photosynthesis. :contentReference[oaicite:9]{index=9}",
+    "Precautions": [
+      "Plant rust-resistant varieties and monitor fields during humid periods.",
+      "Maintain good plant spacing and canopy ventilation to reduce leaf moisture.",
+      "Eliminate volunteer hosts and clean tools to reduce inoculum."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply foliar fungicides with efficacy against rust when early pustules appear, following label instructions and rotating modes of action."
+      ],
+      "Organic": [
+        "Use biocontrol or botanical fungicides where available; maintain plant vigour to reduce disease impact."
+      ]
+    }
+  },
+  "Yellow": {
+    "Cause": "Viral disease commonly referred to as Sugarcane yellow leaf disease (caused by Sugarcane yellow leaf virus, SCYLV); transmitted by aphids and infected planting material. :contentReference[oaicite:11]{index=11}",
+    "Symptoms": "Leaves show yellowing, often starting at leaf tip or along margins, sometimes accompanied by reduced cane growth, thin internodes and lower sugar yield. :contentReference[oaicite:12]{index=12}",
+    "Precautions": [
+      "Use virus-free seed cane and certified planting material.",
+      "Control insect vectors (aphids) and remove weed hosts.",
+      "Inspect cane fields regularly and remove infected plants."
+    ],
+    "Cure": {
+      "Chemical": [
+        "There is no direct chemical cure for the virus; management focuses on vector control and resistant varieties."
+      ],
+      "Organic": [
+        "Promote plant health via organic fertilisation and soil amendments.",
+        "Use cultural practices (crop rotation, sanitation) to reduce virus spread."
+      ]
+    }
+  }
+}

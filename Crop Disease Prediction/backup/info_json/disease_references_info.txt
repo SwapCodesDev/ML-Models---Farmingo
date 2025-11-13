@@ -1,0 +1,139 @@
+1]Chilli  Class_names:['cercospora', 'healthy', 'murda complex(mites,trips)', 'nutritional', 'powdery mildew']
+
+🔗 References 
+1. Plantix (Cercospora Leaf Spot in Chilli) – https://plantix.net/en/library/plant-diseases/100085/chilli-cercospora-leaf-spot/
+2. Tamil Nadu Agricultural University (TNAU) – Chilli Crop Protection Guide – https://agritech.tnau.ac.in/crop_protection/chilli/chilli_1.html
+3. BigHaat Kisan Vedika – Management of Thrips and Mites in Chilli Crop – https://www.bighaat.com/kisan-vedika/blogs/management-of-thrips-and-mites-in-chilli-crop
+4. ICL Growing Solutions – Chilli Crop Nutrition Advice – https://icl-growingsolutions.com/en-in/agriculture/crops/growing-chilli-crop-nutrition-advice/
+5. Dhanuka Agritech – Measures to Protect Chilli from Powdery Mildew – https://www.dhanuka.com/blogs/measures-to-protect-chilli-crop-from-powdery-mildew
+6. Katyayani Krishi Direct – Powdery Mildew in Chilli Crop – https://katyayanikrishidirect.com/blogs/news/powdery-mildew-in-chilli-crop
+7. Yara Crop Nutrition – Nutrient Deficiencies in Chilli – https://www.yara.my/crop-nutrition/chili/nutrient-deficiencies-chili/
+8. Koppert Biological Systems – Chilli Thrips Management – https://www.koppert.com/plant-pests/thrips/chilli-thrips/
+
+
+
+2]Corn  Class_names:['Blight', 'Common_Rust', 'Gray_Leaf_Spot', 'Healthy']
+
+🔗 References 
+1. Agritech TNAU – Leaf Blight of Maize (Exserohilum turcicum) – https://agritech.tnau.ac.in/crop_protection/maize_disease_new/maize_2.html
+2. Crop Protection Network (CPN) – Overview of Northern Corn Leaf Blight (NCLB) –  https://cropprotectionnetwork.org/publications/an-overview-of-northern-corn-leaf-blight
+3. University of Nebraska–Lincoln (CropWatch) – Common Rust of Corn (Puccinia sorghi) – https://cropwatch.unl.edu/plant-disease/corn/common-rust
+4. Pioneer (Corteva Agriscience) – Gray Leaf Spot of Corn (Cercospora zeae-maydis) – https://www.pioneer.com/us/agronomy/gray_leaf_spot_cropfocus.html
+5. Plantix – Gray Leaf Spot of Maize – https://plantix.net/en/library/plant-diseases/100107/grey-leaf-spot-of-maize
+6. Iowa State University Extension & Outreach – Common Rust and Northern Corn Leaf Blight Management Guide – https://crops.extension.iastate.edu/common-rust-and-northern-corn-leaf-blight-corn
+7. University of Illinois Extension – Gray Leaf Spot and Other Foliar Diseases of Corn – https://extension.illinois.edu/blogs/field-crop-disease/2020-07-30-gray-leaf-spot-and-other-foliar-diseases-corn
+8. CABI Invasive Species Compendium – Cercospora zeae-maydis (Gray Leaf Spot) – https://www.cabi.org/isc/datasheet/12116
+
+
+
+3] Cotton  Class_names: ['Bacterial Blight', 'Curl Virus', 'Healthy Leaf', 'Herbicide Growth Damage', 'Leaf Hopper Jassids', 'Leaf Redding', 'Leaf Variegation', 'Fusarium Wilt']
+
+🔗 References
+1. “Bacterial Blight of Cotton (Xanthomonas citri pv. malvacearum)”, NC State Extension Publications – https://content.ces.ncsu.edu/bacterial-blight-angular-leaf-spot-of-cotton :contentReference[oaicite:0]{index=0}  
+2. “Cotton Leaf Curl Virus Disease (CLCuD) – Review”, International Journal – https://ijiaar.penpublishing.net/makale_indir/851 :contentReference[oaicite:1]{index=1}  
+3. “Cotton Leaf Curl Virus | Plantix” – https://plantix.net/en/library/plant-diseases/200057/cotton-leaf-curl-virus/ :contentReference[oaicite:2]{index=2}  
+4. “Cotton Leaf Disease Dataset … eight leaf conditions including herbicide growth damage, leaf redding, etc.” (MDPI) – https://www.mdpi.com/2504-446X/9/5/385 :contentReference[oaicite:3]{index=3}  
+5. “Cotton Crop Protection – Leafhopper/Pest context”, TNAU Agritech Portal – https://agritech.tnau.ac.in/crop_protection/crop_prot_crop_insectpest%20_cotton.html :contentReference[oaicite:4]{index=4}  
+6. “Classification of cotton leaf disease using YOLOv8 … herbicide growth damage, leaf redding” – Nature/Scientific Reports – https://www.nature.com/articles/s41598-025-13147-4 :contentReference[oaicite:5]{index=5}  
+
+
+
+4] Grapes   Class_names: ['Bacterial Leaf Spot', 'Black Rot', 'Downy Mildew', 'ESCA', 'Healthy', 'Leaf Blight', 'Powdery Mildew']
+
+🔗 References
+1. VineHealth – Bacterial Blight of Grapevine (FS) – https://vinehealth.com.au/media/Bacterial-blight-of-grapevine-FS.pdf :contentReference[oaicite:18]{index=18}
+2. M. Szabó et al. – Black Rot of Grapes (Guignardia bidwellii), MDPI 2023 – https://www.mdpi.com/2311-7524/9/2/130 :contentReference[oaicite:19]{index=19}
+3. Agriculture and Agri-Food Canada – Identification Guide to the Major Diseases of Grapes – https://agriculture.canada.ca/en/agricultural-production/crop-protection/agricultural-pest-management-resources/identification-guide-major-diseases-grapes :contentReference[oaicite:20]{index=20}
+4. Grape Leaf Disease Dataset (Dharrao, 2025) – “Grape leaf diseases … Downy Mildew, Powdery Mildew, Bacterial Leaf Spot” – https://www.sciencedirect.com/science/article/pii/S2352340925004445 :contentReference[oaicite:21]{index=21}
+5. Grapevine Trunk Disease – ESCA Management (Virginia Tech GrapePathology) –  https://grapepathology.org/esca-management :contentReference[oaicite:22]{index=22}
+6. National Horticulture Board (India) – Diseases of Grapes: Leaf Blight & Bunch Necrosis fact sheet –  https://nhb.gov.in/bulletin_files/fruits/grape/gra002.pdf :contentReference[oaicite:23]{index=23}
+7. Agritimes – Top 10 Grapes Diseases Ravaging India: Downy, Powdery Mildew, Black Rot … – https://agritimes.co.in/horticulture/top-10-grape-diseases-ravaging-india-amidst-climate-change/ :contentReference[oaicite:24]{index=24}
+
+
+
+5] Groundnut  Class_names: ['ALTERNARIA LEAF SPOT', 'HEALTHY', 'LEAF SPOT (EARLY AND LATE)', 'ROSETTE', 'RUST']
+
+🔗 References
+1. Oklahoma State University Extension – Foliar Diseases of Peanuts (Early & Late Leaf Spot) – https://extension.okstate.edu/fact-sheets/foliar-diseases-of-peanuts.html  :contentReference[oaicite:11]{index=11}  
+2. Tandfonline – Leaf spot disease of groundnut: A review of existing research on ... – https://www.tandfonline.com/doi/full/10.1080/23311932.2022.2118650  :contentReference[oaicite:12]{index=12}  
+3. ResearchGate – Groundnut Rosette Disease symptoms types, distribution and management – https://www.researchgate.net/publication/261884902_Groundnut_rosette_disease_symptoms_types_distribution_and_management_of_the_disease_in_Uganda  :contentReference[oaicite:13]{index=13}  
+4. OAR/ICRISAT – Early and Late Leaf Spots of Groundnut (Information Bulletin) – https://oar.icrisat.org/821/1/RA_00080.pdf  :contentReference[oaicite:14]{index=14}  
+5. PDF – Diseases of Groundnut in West Africa and their management – https://core.ac.uk/download/pdf/219472641.pdf  :contentReference[oaicite:15]{index=15}  
+6. PDF – Breeding groundnut for rust resistance: A review – https://oar.icrisat.org/11260/1/Breeding-groundnut-for-rust-resistance-A-review.pdf  :contentReference[oaicite:16]{index=16}  
+7. PMC Article – A novel groundnut leaf dataset for detection and ... – https://www.pmc.ncbi.nlm.nih.gov/articles/PMC11327543/  :contentReference[oaicite:17]{index=17}  
+
+
+
+6] Melon  Class_names: ['Anthracnose', 'Downy_Mildew', 'Healthy', 'Mosaic_Virus']
+
+🔗 References
+1. TNAU Agritech Portal – Anthracnose of Watermelon/Melon (Colletotrichum spp.) –  https://agritech.tnau.ac.in/crop_protection/water_melon_4.html
+2. UC IPM (University of California) – Anthracnose (Cucurbits) – https://ipm.ucanr.edu/agriculture/cucurbits/anthracnose/
+3. Bayer Vegetables – Downy Mildew in Watermelon & Cucurbits (Pseudoperonospora cubensis) – https://vegetables.bayer.com/language-masters/en-us/resources/growing-tips-and-innovation-articles/agronomic-spotlights/watermelon-downy-mildew.html
+4. CucCAP – Downy Mildew on Melon – https://cuccap.org/disease-management/melon/downy-mildew/
+5. Nature/PMC – Overview of Virus-Resistant Breeding of Melon (including mosaic viruses) – https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11669512/
+6. ScienceDirect – Watermelon Mosaic Virus disease in cucurbits – https://www.sciencedirect.com/topics/neuroscience/watermelon-mosaic-virus
+7. MDPI – One-Step Multiplex RT-PCR method for detection of melon viruses – https://www.mdpi.com/2076-2607/12/11/2337
+
+
+
+7] Onion  Class_names: ['Iris yellow virus', 'healthy', 'leaf blight', 'purple blotch']
+
+🔗 References
+1. UC IPM – Onion and Garlic: Iris Yellow Spot Virus (IYSV) – https://ipm.ucanr.edu/agriculture/onion-and-garlic/iris-yellow-spot/  :contentReference[oaicite:20]{index=20}  
+2. Extension Utah State University – Iris Yellow Spot Virus in Onions – https://extension.usu.edu/planthealth/research/iysv  :contentReference[oaicite:21]{index=21}  
+3. CABI Digital Library – Iris Yellow Spot Virus (IYSV) of Onion – https://www.cabidigitallibrary.org/doi/full/10.1079/cabicompendium.28848  :contentReference[oaicite:22]{index=22}  
+4. PNWHandbooks.org – Onion (Allium cepa) : Leaf Blight (Botrytis leaf blight) – https://pnwhandbooks.org/plantdisease/host-disease/onion-allium-cepa-botrytis-leaf-blight  :contentReference[oaicite:23]{index=23}  
+5. APSnet Plant Disease Lesson – Stemphylium Leaf Blight of Onion – https://www.apsnet.org/edcenter/pdlessons/Pages/Stemphylium-leaf-blight-Onion.aspx  :contentReference[oaicite:24]{index=24}  
+6. PNWHandbooks.org – Onion (Allium cepa) : Purple Blotch (Alternaria porri) – https://pnwhandbooks.org/plantdisease/host-disease/onion-allium-cepa-iris-yellow-spot  (Note: same site covers IYSV and other foliar diseases)  :contentReference[oaicite:25]{index=25}  
+7. Plantix – Purple Blotch of Onion – https://plantix.net/en/library/plant-diseases/100278/purple-blotch-of-onion/  :contentReference[oaicite:26]{index=26}  
+
+
+
+8] Sorghum  Class_names: ['Cereal Grain molds', 'Covered Kernel smut', 'Head Smut', 'Red Rot', 'Rust', 'Loose Smut']
+
+🔗 References
+1. ICAR-Indian Institute of Millets Research – Sorghum Grain Mold Disease Complex – https://www.millets.res.in/pub/2020/Sorghum_grain_mold_2020.pdf  ([turn0search9])  
+2. TNAU Agritech Portal – Diseases of Sorghum (Head Smut · Covered Kernel Smut · Smut · Downy Mildew · Rust · Anthracnose & Red Rot · Cereal Grain Molds) –  https://agritech.tn.in/crop_protection/sorghum_disease/sorghum_d8.html  ([turn0search2])  
+3. University of Arkansas Extension – Common and Important Diseases of Grain Sorghum (Head Blight & Molds) – https://www.uaex.uada.edu/publications/PDF/MP297/6_diseases.pdf  ([turn0search7])  
+4. EAgri.org Lecture – Anthracnose & Red Rot in Sorghum – https://eagri.org/eagri50/PATH272/lecture02/004.html  ([turn0search6])  
+5. The Beat Sheet – Sorghum Diseases (Rust, Grain Mould etc.) – https://thebeatsheet.com.au/disease/disease-by-crop/sorghum-diseases/  ([turn0search14])  
+6. Courseware CUTM – Major Diseases of Sorghum (smuts, leaf blight, rust etc.) – 
+   https://courseware.cutm.ac.in/wp-content/uploads/2020/05/sorghum.pdf  ([turn0search11])  
+
+
+
+9] Sugarcane  Class_names: ['Healthy', 'Mosaic', 'RedRot', 'Rust', 'Yellow']
+
+🔗 References
+1. Viswanathan, Rao & Solomon – Diseases of Sugarcane: Red Rot of Sugarcane – https://gau.edu.bd/tanbir/wp-content/uploads/sites/170/2021/09/18-21-Diseases-of-Sugarcane.pdf  ([turn0search9])  
+2. Texas A&M Plant Disease Handbook – Sugarcane Rust (Puccinia melanocephala) – https://plantdiseasehandbook.tamu.edu/industry-specialty/sugar-crops/sugarcane/  ([turn0search12])  
+3. Qamar et al. (2024) – Factors affecting yield: yield losses due to mosaic virus, rust, etc. – https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11128568/  ([turn0search21])  
+4. EAgri Lecture Notes – Major Disease: Sugarcane Mosaic – https://eagri.org/eagri50/PATH272/lecture06/008.html  ([turn0search20])  
+5. Safi Sarvi Organic Fertilizer Blog – Sugarcane Diseases & Symptoms (Yellow Leaf Disease) – https://safiorganics.co.ke/blog/sugarcane-diseases-and-symptoms/  ([turn0search18])  
+
+
+
+10] Tomato  Class_names: ['Bacterial_spot', 'Early_blight', 'Late_blight', 'Leaf_Mold', 'Septoria_leaf_spot', 'Spider_mites', 'Target_Spot', 'Tomato_mosaic_virus', 'Yellow_Leaf_Curl_Virus', 'healthy']
+
+🔗 References
+1. Wisconsin Horticulture – Bacterial Spot of Tomato –  https://hort.extension.wisc.edu/articles/bacterial-spot-of-tomato/  :contentReference[oaicite:22]{index=22}
+2. IPM UConn – Bacterial Speck & Spot of Tomato – https://ipm.cahnr.uconn.edu/bacterial-speck-and-spot-of-tomato/  :contentReference[oaicite:23]{index=23}
+3. University of Minnesota Extension – Early Blight of Tomato and Potato –  https://extension.umn.edu/disease-management/early-blight-tomato-and-potato  :contentReference[oaicite:24]{index=24}
+4. TNAU Agritech – Late Blight: Phytophthora infestans (Tomato) –  https://agritech.tnau.ac.in/crop_protection/tomato_diseases_8.html  :contentReference[oaicite:25]{index=25}
+5. Wikipedia / other sources – Septoria Leaf Spot of Tomato – https://en.wikipedia.org/wiki/Septoria_lycopersici  :contentReference[oaicite:26]{index=26}
+6. Agriculture Victoria – Tomato Yellow Leaf Curl Virus (TYLCV) – https://agriculture.vic.gov.au/biosecurity/plant-diseases/vegetable-diseases/tomato-yellow-leaf-curl-virus  :contentReference[oaicite:27]{index=27}
+7. Wikipedia / other sources – Tomato Mosaic Virus (ToMV) – https://en.wikipedia.org/wiki/Tomato_mosaic_virus  :contentReference[oaicite:28]{index=28}
+8. Dataset & deep-learning research – Tomato leaf mold, target spot, spider mites and dataset classification – 
+   “Tomato leaf disease diagnosis … dataset contains … leaf mold, target spot, two-spotted spider mite, yellow leaf curl virus” (Zhao et al. 2021) – https://www.mdpi.com/2077-0472/11/7/651  :contentReference[oaicite:29]{index=29}
+
+
+
+11] Wheat  Class_names: ['BlackPoint', 'FusariumFootRot', 'HealthyLeaf', 'LeafBlight', 'WheatBlast']
+
+🔗 References
+1. Crop Protection Network – Black Point of Wheat – https://cropprotectionnetwork.org/encyclopedia/black-point-of-wheat :contentReference[oaicite:11]{index=11}  
+2. UC IPM – Wheat (Triticum aestivum) - Black Point (Kernel Smudge) – https://pnwhandbooks.org/plantdisease/host-disease/wheat-triticum-aestivum-black-point-kernel-smudge :contentReference[oaicite:12]{index=12}  
+3. University of Nebraska–Lincoln Extension – Common Root Rot and Fusarium Foot Rot of Wheat – https://extensionpubs.unl.edu/publication/g1998-2015/pdf/view/g1998-2015.pdf :contentReference[oaicite:13]{index=13}  
+4. Springer – Globally Important Non-rust Diseases of Wheat  https://link.springer.com/chapter/10.1007/978-3-030-90673-3_9 :contentReference[oaicite:14]{index=14}  
+5. Nature/Frontiers – Wheat Blast: A Disease Spreading by Intercontinental Jumps … –  https://frontiersin.org/articles/10.3389/fpls.2021.710707/full :contentReference[oaicite:15]{index=15}  

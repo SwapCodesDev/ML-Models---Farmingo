@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Crop Recommendation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col items-center justify-center min-h-screen p-4">
+  <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-4 text-center text-green-700">🌱 Smart Crop Recommendation</h1>
+    <p id="status" class="text-gray-500 text-center mb-4">Fetching your location...</p>
+
+    <div id="result" class="hidden">
+      <p><strong>📍 Location:</strong> <span id="coords"></span></p>
+      <p><strong>🏞️ State:</strong> <span id="state"></span></p>
+      <p><strong>🌾 Recommended Crop:</strong> <span id="crop"></span></p>
+      <p><strong>🌱 Alternative Crops:</strong> <span id="alternatives"></span></p>
+    </div>
+
+    <div id="error" class="hidden text-red-500 mt-4 text-center"></div>
+  </div>
+
+  <script>
+    async function sendLocation(latitude, longitude) {
+      // Send location to backend for logging (optional)
+      await fetch("/location", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ latitude, longitude })
+      });
+
+      // Call crop recommendation API
+      const payload = {
+        auto_location: true,
+        latitude: latitude,
+        longitude: longitude
+      };
+
+      try {
+        const response = await fetch("/recommend", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) throw new Error("Failed to get recommendation");
+
+        const data = await response.json();
+
+        // Update UI
+        document.getElementById("status").classList.add("hidden");
+        document.getElementById("result").classList.remove("hidden");
+
+        document.getElementById("coords").textContent =
+          `${data.coords.latitude.toFixed(4)}, ${data.coords.longitude.toFixed(4)}`;
+        document.getElementById("state").textContent = data.state;
+        document.getElementById("crop").textContent = data.predicted_crop;
+        document.getElementById("alternatives").textContent =
+          data.partially_suitable.length ? data.partially_suitable.join(", ") : "None";
+
+      } catch (err) {
+        console.error("Error:", err);
+        document.getElementById("error").textContent =
+          "❌ Failed to fetch crop recommendation. Check console for details.";
+        document.getElementById("error").classList.remove("hidden");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            document.getElementById("status").textContent = "Location found! Generating recommendation...";
+            sendLocation(lat, lon);
+          },
+          err => {
+            console.error("Geolocation error:", err);
+            document.getElementById("status").textContent = "Failed to get your location.";
+            document.getElementById("error").textContent = "Please allow location access and refresh the page.";
+            document.getElementById("error").classList.remove("hidden");
+          }
+        );
+      } else {
+        document.getElementById("status").textContent = "Geolocation is not supported in this browser.";
+      }
+    });
+  </script>
+</body>
+</html>

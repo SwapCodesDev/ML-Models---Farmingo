@@ -1,0 +1,74 @@
+{
+  "Iris yellow virus": {
+    "Cause": "Viral disease caused by Iris yellow spot virus (IYSV), transmitted by onion thrips (Thrips tabaci). :contentReference[oaicite:2]{index=2}",
+    "Symptoms": "Yellow to straw-colored elongated lesions on leaves and scapes; diamond-shaped flecks; reduction in bulb size and yield. :contentReference[oaicite:3]{index=3}",
+    "Precautions": [
+      "Use virus-free or certified seed material and avoid fields with volunteer onions or alternate Allium hosts.",
+      "Control onion thrips populations and remove weeds/alternate hosts near the field.",
+      "Maintain good fertility and avoid plant stress (especially avoid excess nitrogen which may favour thrips). :contentReference[oaicite:4]{index=4}"
+    ],
+    "Cure": {
+      "Chemical": [
+        "No direct cure for the virus once plant is infected; focus on vector control (thrips) and preventive fungicide/insecticide-based programs."
+      ],
+      "Organic": [
+        "Encourage natural predators of thrips, use reflective mulches or barrier crops to reduce landing of vectors.",
+        "Maintain healthy crop growth via organic compost and avoid plant stress so plants better tolerate infection."
+      ]
+    }
+  },
+  "healthy": {
+    "Cause": "No disease or major stress detected; plant growing under favourable conditions.",
+    "Symptoms": "Uniform green leaves, normal bulb and shoot development, no spots, lesions or deformities.",
+    "Precautions": [
+      "Maintain balanced irrigation and nutrient schedule appropriate for onion.",
+      "Regularly inspect plants for early signs of pests, diseases or nutrient imbalances.",
+      "Sanitise tools and equipment; rotate crops away from Allium for at least 2-3 years when possible. :contentReference[oaicite:5]{index=5}"
+    ],
+    "Cure": {
+      "Chemical": [
+        "No specific treatment required; preventive management only."
+      ],
+      "Organic": [
+        "Apply well-composted organic matter or vermicompost to promote soil health.",
+        "Use neem or other botanical sprays monthly as part of preventive monitoring program."
+      ]
+    }
+  },
+  "leaf blight": {
+    "Cause": "Foliar fungal disease such as Botrytis leaf blight (caused by Botrytis squamosa) or Stemphylium leaf blight (caused by Stemphylium vesicarium), often following stress or other disease initiation. :contentReference[oaicite:8]{index=8}",
+    "Symptoms": "Initial small white or tan spots with halo on leaves turning into coalesced necrotic areas, leaf tip die-back, loss of photosynthetic area and smaller bulb size. :contentReference[oaicite:9]{index=9}",
+    "Precautions": [
+      "Remove old debris and volunteer onions; practise crop rotation with non-Allium crops for 2-3 years. :contentReference[oaicite:10]{index=10}",
+      "Avoid dense plantings and overhead irrigation; ensure good airflow and minimise leaf wetness duration. :contentReference[oaicite:11]{index=11}",
+      "Use certified seed and avoid planting in fields with heavy Allium debris or known disease history."
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply foliar fungicides as per local label for Botrytis or Stemphylium leaf blight when first symptoms appear; rotate modes of action. :contentReference[oaicite:12]{index=12}"
+      ],
+      "Organic": [
+        "Use biological fungicides and ensure good field hygiene.",
+        "Promote rapid crop growth and avoid nitrogen excess which can exacerbate foliar disease."
+      ]
+    }
+  },
+  "purple blotch": {
+    "Cause": "Fungal disease caused by Purple blotch (Alternaria porri) and sometimes in complex with Stemphylium spp.; favoured by warm, humid conditions and leaf injury. :contentReference[oaicite:14]{index=14}",
+    "Symptoms": "Water-soaked spots on leaves that quickly develop white or grey centre, then brown to purple lesions with purple halo; can girdle leaves causing die-back and affect bulb quality. :contentReference[oaicite:15]{index=15}",
+    "Precautions": [
+      "Use pathogen-free seed and plant in well-ventilated fields; avoid high humidity and long leaf-wetness periods. :contentReference[oaicite:16]{index=16}",
+      "Avoid mechanical injury to leaves and minimise thrips damage which predisposes to infection. :contentReference[oaicite:17]{index=17}",
+      "Remove and destroy infected plant debris and onion cull piles at end of season. :contentReference[oaicite:18]{index=18}"
+    ],
+    "Cure": {
+      "Chemical": [
+        "Apply fungicides effective against Alternaria and Stemphylium (e.g., mancozeb, chlorothalonil) at early symptoms and repeat under favourable conditions. :contentReference[oaicite:19]{index=19}"
+      ],
+      "Organic": [
+        "Use neem oil or other botanical sprays early; maintain plant vigour and avoid stress conditions.",
+        "Enhance soil organic matter so plants are less susceptible to foliar disease."
+      ]
+    }
+  }
+}
