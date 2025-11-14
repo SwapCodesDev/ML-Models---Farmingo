@@ -1,17 +1,12 @@
 from fastapi import FastAPI, Request, UploadFile, File, HTTPException
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from datetime import datetime
 import pandas as pd
 import numpy as np
-import requests
 import shutil
 import uuid
 import os
-
-from utility import load_pickle_model
 
 from schema import (
     CropPriceInput, 
@@ -19,7 +14,6 @@ from schema import (
     WeatherSoilData,
     CropRequest, 
     CropResponse, 
-    DiseaseRequest, 
     DiseaseResponse
 )
 
@@ -30,15 +24,14 @@ from logic import (
     get_season,
     predict_crop,
     recommend_alternatives,
-    predict_disease
+    predict_disease,
+    predict_crop_price
 )
 
-# Path to your trained model
-MODEL_PATH = r"D:\Projects\ML Models - Farmingo\Crop Price Prediction\backup\crop_price_model_01.pkl"
 
 app = FastAPI(title="Farmingo")
 
-# ✅ Allow your frontend to call FastAPI
+# Allow your frontend to call FastAPI
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # or ["http://localhost:8000", "http://127.0.0.1:5500"]
@@ -70,7 +63,6 @@ async def receive_location(request: Request):
 
     print(f"✅ User location updated: {lat}, {lon}")
     return {"latitude": lat, "longitude": lon}
-
 
 
 @app.post("/crop_disease_prediction", response_model=DiseaseResponse)
@@ -148,41 +140,6 @@ def recommend(data: CropRequest):
         state=state,
         season_code=season_code
     )
-
-
-def predict_crop_price(crop: str, region: str, date: str = None):
-    """Predict crop price for given crop, region, and date."""
-    model = load_pickle_model(MODEL_PATH)
-    if model is None:
-        return -1.0  # Error indicator
-
-    if date is None:
-        date_obj = datetime.today()
-    else:
-        date_obj = pd.to_datetime(date, dayfirst=True)
-
-    # Extract date features
-    year, month, day = date_obj.year, date_obj.month, date_obj.day
-    day_of_week = date_obj.dayofweek
-    week_of_year = date_obj.isocalendar()[1]
-
-    # Fallback market: use first available for region
-    market = "null"
-
-    # Prepare input for model
-    input_df = pd.DataFrame([{
-        "District": region,
-        "Market": market,
-        "Commodity": crop,
-        "Year": year,
-        "Month": month,
-        "Day": day,
-        "DayOfWeek": day_of_week,
-        "WeekOfYear": week_of_year
-    }])
-
-    pred_price = model.predict(input_df)[0]
-    return round(pred_price, 2)
 
 
 @app.post("/crop_price", response_model=CropPriceOutput)

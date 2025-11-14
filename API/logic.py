@@ -1,7 +1,18 @@
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Disable TensorFlow logs
+
+import warnings
+warnings.filterwarnings("ignore")  # Disable all warnings
+# OR selective:
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+
 import requests
 import pandas as pd
 import numpy as np
 from datetime import datetime
+from utility import load_pickle_model
 import pickle
 import os
 from requests.exceptions import RequestException
@@ -110,12 +121,13 @@ def compute_features(df):
 
 # ------------ 4. Season Code ------------
 def get_season():
-    month = datetime.now().strftime("%B")
+    month = datetime.now().strftime("%b")  # <-- returns Jan, Feb, Mar...
     if month in ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"]:
         return 1
     if month in ["Jun", "Jul", "Aug", "Sep"]:
         return 2
     return 3
+
 
 
 # ------------ 5. Load Model & Predict ------------
@@ -360,3 +372,40 @@ def predict_disease(crop_name: str, img_path: str):
     }
 
     return result
+# ------------ 8. Crop Price Prediction ------------
+
+MODEL_PATH = r"D:\Projects\ML Models - Farmingo\Crop Price Prediction\backup\crop_price_model_01.pkl"
+
+def predict_crop_price(crop: str, region: str, date: str = None):
+    """Predict crop price for given crop, region, and date."""
+    model = load_pickle_model(MODEL_PATH)
+    if model is None:
+        return -1.0  # Error indicator
+
+    if date is None:
+        date_obj = datetime.today()
+    else:
+        date_obj = pd.to_datetime(date, dayfirst=True)
+
+    # Extract date features
+    year, month, day = date_obj.year, date_obj.month, date_obj.day
+    day_of_week = date_obj.dayofweek
+    week_of_year = date_obj.isocalendar()[1]
+
+    # Fallback market: use first available for region
+    market = "null"
+
+    # Prepare input for model
+    input_df = pd.DataFrame([{
+        "District": region,
+        "Market": market,
+        "Commodity": crop,
+        "Year": year,
+        "Month": month,
+        "Day": day,
+        "DayOfWeek": day_of_week,
+        "WeekOfYear": week_of_year
+    }])
+
+    pred_price = model.predict(input_df)[0]
+    return round(pred_price, 2)
