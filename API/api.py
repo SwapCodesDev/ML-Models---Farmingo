@@ -156,7 +156,7 @@ def predict(data: CropPriceInput):
 # cd to the directory containing api.py before running the command.
 # Example = uvicorn api:app --reload --port 8000 
 # File name: api.py
-# http://127.0.0.1:8000/predict
+# http://127.0.0.1:8000/ # Home page
 # http://127.0.0.1:8000/docs # A testing playground
 # http://127.0.0.1:8000/redoc # Documentation page
 
