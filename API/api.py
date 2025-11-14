@@ -7,6 +7,7 @@ import numpy as np
 import shutil
 import uuid
 import os
+import tempfile
 
 from schema import (
     CropPriceInput, 
@@ -28,89 +29,86 @@ from logic import (
     predict_crop_price
 )
 
-
 app = FastAPI(title="Farmingo")
 
-# Allow your frontend to call FastAPI
+# CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # or ["http://localhost:8000", "http://127.0.0.1:5500"]
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Global variables to hold the latest received coordinates
-user_location = {"latitude": None, "longitude": None}
+# Use app.state (thread-safe)
+app.state.user_location = {"latitude": None, "longitude": None}
 
-# Define base directory for file paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# ✅ Serve index.html at the root URL
+
+# Serve frontend
 @app.get("/", response_class=HTMLResponse)
 async def serve_homepage():
     return FileResponse(os.path.join(BASE_DIR, "index.html"))
 
+
+# Store location
 @app.post("/location")
 async def receive_location(request: Request):
     data = await request.json()
     lat = data.get("latitude")
     lon = data.get("longitude")
 
-    # Store globally
-    user_location["latitude"] = lat
-    user_location["longitude"] = lon
+    if lat is None or lon is None:
+        raise HTTPException(400, "Latitude & Longitude required")
 
-    print(f"✅ User location updated: {lat}, {lon}")
+    app.state.user_location = {"latitude": float(lat), "longitude": float(lon)}
+
+    print(f"Location saved: {lat}, {lon}")
     return {"latitude": lat, "longitude": lon}
 
 
+# Crop disease prediction
 @app.post("/crop_disease_prediction", response_model=DiseaseResponse)
 async def predict_crop_disease(crop_name: str, file: UploadFile = File(...)):
-    # Validate crop string
-    crop_name = crop_name.lower()
+    crop_name = crop_name.lower().strip()
 
-    # Save temp image
-    temp_name = f"temp_{uuid.uuid4()}.jpg"
-    with open(temp_name, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+    # Use temp directory for safe cleanup
+    with tempfile.TemporaryDirectory() as tmp:
+        temp_path = os.path.join(tmp, f"crop_{uuid.uuid4()}.jpg")
 
-    try:
-        result = predict_disease(crop_name, temp_name)
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    finally:
-        # Delete temp image
-        if file:
-            try:
-                os.remove(temp_name)
-            except:
-                pass
+        with open(temp_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+
+        try:
+            result = predict_disease(crop_name, temp_path)
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=str(e))
 
     return DiseaseResponse(**result)
 
 
+# Main crop recommendation
 @app.post("/recommend", response_model=CropResponse)
 def recommend(data: CropRequest):
 
-    lat = user_location["latitude"]
-    lon = user_location["longitude"]
+    lat = app.state.user_location["latitude"]
+    lon = app.state.user_location["longitude"]
 
-    # weather API
-    weather_json = fetch_open_meteo(lat, lon)
+    if lat is None or lon is None:
+        raise HTTPException(400, "Location not received yet. Call /location first.")
 
-    # Convert to DataFrame exactly like your Flask version
-    daily = weather_json["daily"]
-    hourly = weather_json["hourly"]
+    # Fetch weather
+    weather = fetch_open_meteo(lat, lon)
+    daily, hourly = weather["daily"], weather["hourly"]
 
+    # Convert to DataFrame
     df_daily = pd.DataFrame({
-        "date": daily["time"],
+        "date": pd.to_datetime(daily["time"]).date,
         "temp_max": daily["temperature_2m_max"],
         "temp_min": daily["temperature_2m_min"],
         "precipitation": daily["precipitation_sum"]
     })
-
-    df_daily["date"] = pd.to_datetime(df_daily["date"]).dt.date
 
     df = df_daily.copy()
     df["rh_mean"] = np.mean(hourly["relativehumidity_2m"])
@@ -118,30 +116,31 @@ def recommend(data: CropRequest):
     df["soil_moist_mean"] = np.mean(hourly["soil_moisture_0_to_1cm"])
     df["temp_mean"] = np.mean(hourly["temperature_2m"])
 
+    # Compute processed features
     features = compute_features(df)
-    season_code = get_season()
+    features["season_code"] = get_season()
+
+    # Reverse geocoding
     state = reverse_geocode_state(lat, lon)
 
-    features["season_code"] = season_code
-
+    # Predict crop
     predicted_crop = predict_crop(features, state)
     alternatives = recommend_alternatives(predicted_crop, state)
-
-    features_obj = WeatherSoilData(**features)
 
     return CropResponse(
         status="success",
         coords={"latitude": lat, "longitude": lon},
-        weather=features_obj,
+        weather=WeatherSoilData(**features),
         predicted_crop=predicted_crop,
         predicted_score=1.0,
         fully_suitable=[],
         partially_suitable=alternatives,
         state=state,
-        season_code=season_code
+        season_code=features["season_code"]
     )
 
 
+# Crop price prediction
 @app.post("/crop_price", response_model=CropPriceOutput)
 def predict(data: CropPriceInput):
     price = predict_crop_price(data.crop, data.region, data.date)
@@ -151,7 +150,6 @@ def predict(data: CropPriceInput):
         date=data.date,
         price=float(price)
     )
-
 
 
 # To run the app, use the command: uvicorn api:app --reload
