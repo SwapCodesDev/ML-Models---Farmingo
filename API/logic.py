@@ -1,165 +1,24 @@
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Disable TensorFlow logs
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 import warnings
-warnings.filterwarnings("ignore")  # Disable all warnings
-# OR selective:
-warnings.filterwarnings("ignore", category=UserWarning)
-warnings.filterwarnings("ignore", category=DeprecationWarning)
-
+warnings.filterwarnings("ignore")
 
 import requests
 import pandas as pd
 import numpy as np
 from datetime import datetime
-from utility import load_pickle_model
 import pickle
-import os
-from requests.exceptions import RequestException
+import json
+from functools import lru_cache
 
 import tensorflow as tf
 
-import json
 
-# ------------ 1. Reverse Geocoding ------------
-def reverse_geocode_state(lat, lon):
-    url = "https://nominatim.openstreetmap.org/reverse"
-    params = {
-        "format": "jsonv2",
-        "lat": lat,
-        "lon": lon,
-        "zoom": 10,
-        "addressdetails": 1
-    }
-    headers = {"User-Agent": "CropRecommender/1.0 (contact@farmingo.ai)"}
-
-    try:
-        r = requests.get(url, params=params, headers=headers, timeout=15)
-        r.raise_for_status()
-        data = r.json()
-    except Exception as e:
-        print("⚠️ Reverse geocoding failed:", e)
-        return "Unknown"
-
-    address = data.get("address", {})
-
-    # ✅ Try multiple fields for flexibility
-    for key in ("state", "region", "state_district", "province", "county"):
-        if key in address:
-            return address[key].title()
-
-    # ✅ Handle code-style responses like "IN-MH"
-    for k, v in address.items():
-        if isinstance(v, str) and v.startswith("IN-"):
-            code = v.split("-")[-1]
-            state_map = {
-                "MH": "Maharashtra", "KA": "Karnataka", "TN": "Tamil Nadu",
-                "UP": "Uttar Pradesh", "MP": "Madhya Pradesh", "GJ": "Gujarat",
-                "RJ": "Rajasthan", "BR": "Bihar", "WB": "West Bengal", "KL": "Kerala",
-                "TG": "Telangana", "AP": "Andhra Pradesh", "OR": "Odisha",
-                "PB": "Punjab", "HR": "Haryana", "AS": "Assam", "CT": "Chhattisgarh"
-            }
-            return state_map.get(code, "Unknown")
-
-    return address.get("country", "Unknown").title()
-
-
-
-# ------------ 2. Weather API ------------
-def fetch_open_meteo(lat, lon):
-    base = "https://api.open-meteo.com/v1/forecast"
-    params = {
-        "latitude": lat,
-        "longitude": lon,
-        "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum",
-        "hourly": "relativehumidity_2m,soil_temperature_0cm,soil_moisture_0_to_1cm,temperature_2m",
-        "forecast_days": 7,
-        "timezone": "auto"
-    }
-
-    r = requests.get(base, params=params, timeout=20)
-    r.raise_for_status()
-    return r.json()
-
-
-# ------------ 3. Feature Computation ------------
-def compute_features(df):
-    for c in ["temp_max", "temp_min", "precipitation", "rh_mean", "soil_temp_mean", "soil_moist_mean", "temp_mean"]:
-        df[c] = pd.to_numeric(df[c], errors="coerce")
-
-    # temp
-    if df["temp_mean"].notnull().any():
-        temp_avg = df["temp_mean"].mean()
-    else:
-        temp_avg = ((df["temp_max"] + df["temp_min"]) / 2).mean()
-
-    humidity_avg = df["rh_mean"].mean()
-    rainfall_avg = df["precipitation"].sum() / 7
-    soil_moist = df["soil_moist_mean"].mean()
-    soil_temp = df["soil_temp_mean"].mean()
-
-    if soil_moist is None or np.isnan(soil_moist) or soil_moist == 0:
-        soil_moist = 0.15
-
-    # NPK + pH formulas remain unchanged from your Flask code
-    N = round(200 * soil_moist * (1 - abs(soil_moist - 0.25) * 2), 2)
-    P = round(40 * np.exp(-((temp_avg - 30)**2) / 100), 2)
-    K = round(250 * soil_moist * (1 - abs(soil_moist - 0.25) * 2), 2)
-    ph = round(6.8 - 0.05 * (rainfall_avg / 5.0) - 0.02 * (humidity_avg / 100.0), 2)
-    ph = np.clip(ph, 5.0, 8.0)
-
-    return {
-        "N": N,
-        "P": P,
-        "K": K,
-        "temperature": float(round(temp_avg, 2)),
-        "humidity": float(round(humidity_avg, 2)),
-        "ph": float(ph),
-        "rainfall": float(round(rainfall_avg, 2))
-    }
-
-
-# ------------ 4. Season Code ------------
-def get_season():
-    month = datetime.now().strftime("%b")  # <-- returns Jan, Feb, Mar...
-    if month in ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"]:
-        return 1
-    if month in ["Jun", "Jul", "Aug", "Sep"]:
-        return 2
-    return 3
-
-
-
-# ------------ 5. Load Model & Predict ------------
-# BASE = os.path.dirname(os.path.abspath(__file__))
-model_path = r"D:\Projects\ML Models - Farmingo\Weather Prediction\backup\xgboost_model.pkl"
-state_encoder_path = r"D:\Projects\ML Models - Farmingo\Weather Prediction\backup\state_encoder.pkl"
-crop_encoder_path = r"D:\Projects\ML Models - Farmingo\Weather Prediction\backup\crop_encoder.pkl"
-
-model = pickle.load(open(model_path, "rb"))
-state_le = pickle.load(open(state_encoder_path, "rb"))
-crop_le = pickle.load(open(crop_encoder_path, "rb"))
-
-
-def predict_crop(features, state):
-    state_name = state.replace(" State", "").replace(" District", "").strip()
-
-    if state_name in state_le.classes_:
-        enc_state = state_le.transform([state_name])[0]
-    else:
-        enc_state = 0
-
-    X = np.array([[
-        features["N"], features["P"], features["K"],
-        features["temperature"], features["humidity"],
-        features["ph"], features["rainfall"],
-        enc_state, features["season_code"]
-    ]])
-
-    pred = model.predict(X)
-    return crop_le.inverse_transform(pred)[0].capitalize()
-
+# ============================================================
 # Average Daily Rainfall Version (mm/day)
+# ============================================================
+
 CROP_REQUIREMENTS = {
     # Cereals
     "rice": {"temperature": (20, 35), "humidity": (70, 90), "rainfall": (1.25, 2.5), "ph": (5.5, 7.0)},
@@ -209,7 +68,10 @@ CROP_REQUIREMENTS = {
     "cashew": {"temperature": (24, 35), "humidity": (50, 70), "rainfall": (0.42, 1.67), "ph": (5.0, 7.0)},
 }
 
-# --- State Average Environmental Conditions (Daily) ---
+# ============================================================
+# State Average Environmental Conditions (Daily)
+# ============================================================
+
 STATE_CONDITIONS = {
     "Andhra Pradesh": {"temperature": 28.5, "humidity": 75, "ph": 6.8, "rainfall": 5.2},
     "Arunachal Pradesh": {"temperature": 22.0, "humidity": 85, "ph": 6.2, "rainfall": 6.5},
@@ -251,26 +113,156 @@ STATE_CONDITIONS = {
 }
 
 
-# ------------ 6. Alternative Crops ------------
-def recommend_alternatives(predicted, state):
-    # Normalize state names
-    matched_state = None
-    for known_state in STATE_CONDITIONS:
-        if state.lower() in known_state.lower() or known_state.lower() in state.lower():
-            matched_state = known_state
-            break
+# ============================================================
+# 1. REVERSE GEOCODING (CACHED)
+# ============================================================
 
-    if not matched_state:
+@lru_cache(maxsize=256)
+def reverse_geocode_state(lat: float, lon: float) -> str:
+    url = "https://nominatim.openstreetmap.org/reverse"
+    params = {
+        "format": "jsonv2",
+        "lat": lat,
+        "lon": lon,
+        "zoom": 10,
+        "addressdetails": 1,
+    }
+
+    try:
+        r = requests.get(url, params=params, timeout=10, headers={"User-Agent": "Farmingo/1.0"})
+        r.raise_for_status()
+        address = r.json().get("address", {})
+    except Exception:
+        return "Unknown"
+
+    for k in ("state", "region", "state_district", "province", "county"):
+        if k in address:
+            return address[k].title()
+
+    return address.get("country", "Unknown").title()
+
+
+# ============================================================
+# 2. WEATHER API
+# ============================================================
+
+@lru_cache(maxsize=256)
+def fetch_open_meteo(lat: float, lon: float):
+    url = "https://api.open-meteo.com/v1/forecast"
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum",
+        "hourly": "relativehumidity_2m,soil_temperature_0cm,soil_moisture_0_to_1cm,temperature_2m",
+        "forecast_days": 7,
+        "timezone": "auto",
+    }
+
+    r = requests.get(url, params=params, timeout=10)
+    r.raise_for_status()
+    return r.json()
+
+
+# ============================================================
+# 3. FEATURE ENGINEERING
+# ============================================================
+
+def compute_features(df: pd.DataFrame) -> dict:
+    cols = [
+        "temp_max", "temp_min", "precipitation",
+        "rh_mean", "soil_temp_mean", "soil_moist_mean", "temp_mean"
+    ]
+    df[cols] = df[cols].apply(pd.to_numeric, errors="coerce")
+
+    temp_avg = df["temp_mean"].mean() if df["temp_mean"].notna().any() \
+               else ((df["temp_max"] + df["temp_min"]) / 2).mean()
+
+    humidity_avg = df["rh_mean"].mean()
+    rainfall_avg = df["precipitation"].sum() / 7
+    soil_moist = df["soil_moist_mean"].mean() or 0.15
+    soil_temp = df["soil_temp_mean"].mean()
+
+    N = 200 * soil_moist * (1 - abs(soil_moist - 0.25) * 2)
+    P = 40 * np.exp(-((temp_avg - 30) ** 2) / 100)
+    K = 250 * soil_moist * (1 - abs(soil_moist - 0.25) * 2)
+
+    ph = 6.8 - 0.05 * (rainfall_avg / 5) - 0.02 * (humidity_avg / 100)
+    ph = float(np.clip(ph, 5.0, 8.0))
+
+    return {
+        "N": round(N, 2),
+        "P": round(P, 2),
+        "K": round(K, 2),
+        "temperature": round(temp_avg, 2),
+        "humidity": round(humidity_avg, 2),
+        "ph": ph,
+        "rainfall": round(rainfall_avg, 2),
+    }
+
+
+# ============================================================
+# 4. SEASON DETECTION
+# ============================================================
+
+def get_season() -> int:
+    month = datetime.now().strftime("%b")
+    if month in ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"]:
+        return 1
+    if month in ["Jun", "Jul", "Aug", "Sep"]:
+        return 2
+    return 3
+
+
+# ============================================================
+# 5. MODEL LOADING (CACHED)
+# ============================================================
+
+MODEL_PATH = r"D:\Projects\ML Models - Farmingo\Weather Prediction\backup\xgboost_model.pkl"
+STATE_ENCODER_PATH = r"D:\Projects\ML Models - Farmingo\Weather Prediction\backup\state_encoder.pkl"
+CROP_ENCODER_PATH = r"D:\Projects\ML Models - Farmingo\Weather Prediction\backup\crop_encoder.pkl"
+
+@lru_cache(maxsize=1)
+def load_main_model():
+    return (
+        pickle.load(open(MODEL_PATH, "rb")),
+        pickle.load(open(STATE_ENCODER_PATH, "rb")),
+        pickle.load(open(CROP_ENCODER_PATH, "rb")),
+    )
+
+
+def predict_crop(features: dict, state: str) -> str:
+    model, state_le, crop_le = load_main_model()
+
+    clean_state = state.replace(" State", "").replace(" District", "").strip()
+    enc_state = state_le.transform([clean_state])[0] if clean_state in state_le.classes_ else 0
+
+    X = np.array([[
+        features["N"], features["P"], features["K"],
+        features["temperature"], features["humidity"],
+        features["ph"], features["rainfall"],
+        enc_state, features["season_code"]
+    ]])
+
+    pred = model.predict(X)
+    return crop_le.inverse_transform(pred)[0].capitalize()
+
+
+# ============================================================
+# 6. ALTERNATIVE CROPS (merged)
+# ============================================================
+
+def recommend_alternatives(predicted: str, state: str):
+    state_data = next((s for s in STATE_CONDITIONS if state.lower() in s.lower()), None)
+    if not state_data:
         return []
 
-    env = STATE_CONDITIONS[matched_state]
+    env = STATE_CONDITIONS[state_data]
     ranked = []
 
     for crop, req in CROP_REQUIREMENTS.items():
         if crop == predicted.lower():
             continue
 
-        # Calculate "distance" between state climate and crop requirement
         score = (
             abs(env["temperature"] - np.mean(req["temperature"])) +
             abs(env["humidity"] - np.mean(req["humidity"])) / 2 +
@@ -283,129 +275,76 @@ def recommend_alternatives(predicted, state):
     return [c.capitalize() for c, _ in ranked[:5]]
 
 
+# ============================================================
+# 7. DISEASE PREDICTION
+# ============================================================
 
-# ------------ 7. Disease Prediction ------------
-
-
-
-# 📁 Folder Paths (adjust these as per your setup)
 INFO_JSON_FOLDER = r"D:\Projects\ML Models - Farmingo\Crop Disease Prediction\backup\info_json"
 MODEL_FOLDER = r"D:\Projects\ML Models - Farmingo\Crop Disease Prediction\backup\trained_models"
 
-
-# ---------------------------
-# 🔹 Load JSON Info
-# ---------------------------
-def load_disease_info(crop_name: str):
-    """
-    Load disease info JSON for the given crop.
-    """
-    json_path = os.path.join(INFO_JSON_FOLDER, f"{crop_name}_disease_info.json")
-    if not os.path.exists(json_path):
-        raise FileNotFoundError(f"Disease info not found for crop: {crop_name}")
-
-    with open(json_path, "r") as f:
+@lru_cache(maxsize=128)
+def load_disease_info(crop):
+    path = os.path.join(INFO_JSON_FOLDER, f"{crop}_disease_info.json")
+    with open(path, "r") as f:
         return json.load(f)
 
+@lru_cache(maxsize=64)
+def load_crop_model(crop):
+    path = os.path.join(MODEL_FOLDER, f"{crop}_leaf_disease_classifier.h5")
+    return tf.keras.models.load_model(path)
 
-# ---------------------------
-# 🔹 Load Trained Model
-# ---------------------------
-def load_crop_model(crop_name: str):
-    """
-    Load trained disease classifier model for the given crop.
-    """
-    model_path = os.path.join(MODEL_FOLDER, f"{crop_name}_leaf_disease_classifier.h5")
-    if not os.path.exists(model_path):
-        raise FileNotFoundError(f"Model not found for crop: {crop_name}")
+def predict_disease(crop: str, image_path: str) -> dict:
+    info = load_disease_info(crop)
+    model = load_crop_model(crop)
 
-    try:
-        model = tf.keras.models.load_model(model_path)
-        return model
-    except Exception as e:
-        raise RuntimeError(f"Error loading model for {crop_name}: {str(e)}")
+    img = tf.keras.utils.load_img(image_path, target_size=(224, 224))
+    arr = tf.keras.utils.img_to_array(img)[None]
+    arr = tf.keras.applications.efficientnet.preprocess_input(arr)
 
+    preds = model.predict(arr, verbose=0)[0]
+    idx = int(np.argmax(preds))
+    class_names = list(info.keys())
 
-# ---------------------------
-# 🔹 Predict Disease
-# ---------------------------
-def predict_disease(crop_name: str, img_path: str):
-    """
-    Predict crop disease and return structured JSON result.
-    """
+    predicted = class_names[idx]
+    details = info[predicted]
 
-    # Load required assets
-    disease_info = load_disease_info(crop_name)
-    model = load_crop_model(crop_name)
-
-    # Preprocess image
-    img = tf.keras.utils.load_img(img_path, target_size=(224, 224))
-    img_array = tf.keras.utils.img_to_array(img)
-    img_array = np.expand_dims(img_array, axis=0)
-    img_array = tf.keras.applications.efficientnet.preprocess_input(img_array)
-
-    # Predict
-    preds = model.predict(img_array, verbose=0)
-    predicted_index = np.argmax(preds[0])
-    confidence = float(np.max(preds[0]) * 100)
-
-    # Get class names
-    class_names = list(disease_info.keys())
-    if predicted_index >= len(class_names):
-        raise ValueError("Model output size doesn't match JSON class list.")
-
-    predicted_class = class_names[predicted_index]
-    info = disease_info[predicted_class]
-
-    # Format structured API response
-    result = {
-        "crop": crop_name,
-        "predicted_disease": predicted_class,
-        "confidence": round(confidence, 2),
-        "cause": info.get("Cause", "N/A"),
-        "symptoms": info.get("Symptoms", "N/A"),
-        "precautions": info.get("Precautions", []),
+    return {
+        "crop": crop,
+        "predicted_disease": predicted,
+        "confidence": round(float(preds[idx] * 100), 2),
+        "cause": details.get("Cause"),
+        "symptoms": details.get("Symptoms"),
+        "precautions": details.get("Precautions", []),
         "cure": {
-            "chemical": info.get("Cure", {}).get("Chemical", []),
-            "organic": info.get("Cure", {}).get("Organic", []),
+            "chemical": details.get("Cure", {}).get("Chemical", []),
+            "organic": details.get("Cure", {}).get("Organic", []),
         },
     }
 
-    return result
-# ------------ 8. Crop Price Prediction ------------
 
-MODEL_PATH = r"D:\Projects\ML Models - Farmingo\Crop Price Prediction\backup\crop_price_model_01.pkl"
+# ============================================================
+# 8. PRICE PREDICTION
+# ============================================================
 
-def predict_crop_price(crop: str, region: str, date: str = None):
-    """Predict crop price for given crop, region, and date."""
-    model = load_pickle_model(MODEL_PATH)
-    if model is None:
-        return -1.0  # Error indicator
+PRICE_MODEL_PATH = r"D:\Projects\ML Models - Farmingo\Crop Price Prediction\backup\crop_price_model_01.pkl"
 
-    if date is None:
-        date_obj = datetime.today()
-    else:
-        date_obj = pd.to_datetime(date, dayfirst=True)
+@lru_cache(maxsize=1)
+def load_price_model():
+    return pickle.load(open(PRICE_MODEL_PATH, "rb"))
 
-    # Extract date features
-    year, month, day = date_obj.year, date_obj.month, date_obj.day
-    day_of_week = date_obj.dayofweek
-    week_of_year = date_obj.isocalendar()[1]
+def predict_crop_price(crop, region, date=None):
+    model = load_price_model()
+    date_obj = pd.to_datetime(date) if date else datetime.today()
 
-    # Fallback market: use first available for region
-    market = "null"
-
-    # Prepare input for model
-    input_df = pd.DataFrame([{
+    df = pd.DataFrame([{
         "District": region,
-        "Market": market,
+        "Market": "null",
         "Commodity": crop,
-        "Year": year,
-        "Month": month,
-        "Day": day,
-        "DayOfWeek": day_of_week,
-        "WeekOfYear": week_of_year
+        "Year": date_obj.year,
+        "Month": date_obj.month,
+        "Day": date_obj.day,
+        "DayOfWeek": date_obj.dayofweek,
+        "WeekOfYear": date_obj.isocalendar()[1],
     }])
 
-    pred_price = model.predict(input_df)[0]
-    return round(pred_price, 2)
+    return round(float(model.predict(df)[0]), 2)
