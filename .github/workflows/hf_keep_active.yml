@@ -1,0 +1,16 @@
+name: Keep HuggingFace Space Awake
+
+on:
+  schedule:
+    - cron: "30 20 * * *"   # 2:00 AM IST
+  workflow_dispatch:
+
+jobs:
+  ping-space:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping Farmingo Space health endpoint
+        run: |
+          curl --fail --show-error --silent \
+          "https://swapcodes-farmingo.hf.space/health"
