@@ -16,6 +16,12 @@ import numpy as np
 import shutil
 import uuid
 import tempfile
+import sys
+
+# Ensure the `api` directory is in the Python path for local execution and linting
+api_dir = os.path.dirname(os.path.abspath(__file__))
+if api_dir not in sys.path:
+    sys.path.append(api_dir)
 
 # Internal imports
 
