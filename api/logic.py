@@ -17,6 +17,7 @@ import pickle
 import json
 import re
 import time
+import cloudscraper
 from functools import lru_cache
 from pathlib import Path
 
@@ -684,7 +685,10 @@ def get_response(
         "Sec-Fetch-Site": "same-site",
         "Accept-Language": "en-US,en;q=0.9"
     }
-    return requests.post(url, json=params, headers=headers, timeout=30, verify=False)
+    
+    # Bypass Cloudflare using cloudscraper
+    scraper = cloudscraper.create_scraper(browser='chrome')
+    return scraper.post(url, json=params, headers=headers, timeout=30)
 
 
 # ==========================================
