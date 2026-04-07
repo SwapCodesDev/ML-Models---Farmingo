@@ -28,6 +28,8 @@ if api_dir not in sys.path:
 from schema import (
     PricePredictionRequest,
     PricePredictionResponse,
+    DemandSupplyRequest,
+    DemandSupplyResponse,
     WeatherSoilData,
     CropRequest, 
     CropResponse, 
@@ -44,7 +46,8 @@ from logic import (
     predict_crop,
     recommend_alternatives,
     predict_disease,
-    predict_price_logic
+    predict_price_logic,
+    execute_demand_supply
 )
 
 app = FastAPI(
@@ -209,6 +212,21 @@ async def predict_price(request: PricePredictionRequest):
         return PricePredictionResponse(**result)
     except Exception as e:
         return PricePredictionResponse(status="error", message=str(e))
+
+
+# Endpoint: Demand & Supply Analytics
+@app.post("/demand_supply", response_model=DemandSupplyResponse)
+async def analyze_demand_supply(request: DemandSupplyRequest):
+    try:
+        result = execute_demand_supply(
+            district=request.district,
+            commodity=request.commodity,
+            category=request.category,
+            target_date_str=request.target_date
+        )
+        return DemandSupplyResponse(**result)
+    except Exception as e:
+        return DemandSupplyResponse(status="error", error=str(e))
 
 
 

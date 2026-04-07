@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 
 # Price Prediction Models
 
@@ -22,6 +22,36 @@ class PricePredictionResponse(BaseModel):
     excel_min: Optional[float] = None
     excel_max: Optional[float] = None
     message: Optional[str] = None
+
+
+# Demand & Supply Models
+
+class DemandSupplyRequest(BaseModel):
+    district: str
+    commodity: str
+    category: str
+    target_date: Optional[str] = None
+
+
+class DemandSupplyAnalysis(BaseModel):
+    z_score: float
+    supply_gap_pct: float
+    price_shift_pct: float
+    condition: str
+    confidence: str
+
+
+class DemandSupplyResponse(BaseModel):
+    status: str
+    date_found: Optional[str] = None
+    live_supply: Optional[float] = None
+    live_price: Optional[float] = None
+    baseline_qty: Optional[float] = None
+    baseline_price: Optional[float] = None
+    analysis: Optional[DemandSupplyAnalysis] = None
+    recommendation: Optional[str] = None
+    error: Optional[str] = None
+
 
 # Weather Data Models
 

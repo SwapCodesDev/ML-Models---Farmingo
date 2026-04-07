@@ -12,7 +12,7 @@ import tensorflow as tf
 import requests
 import pandas as pd
 import numpy as np
-from datetime import datetime
+from datetime import datetime, date, timedelta
 import pickle
 import json
 import re
@@ -517,6 +517,412 @@ def predict_price_logic(lat: float, lon: float, commodity: str = "chilli"):
     }
     
     return output
+
+# ==========================================
+# 📈 DEMAND & SUPPLY: AGMARKNET API WRAPPER
+# ==========================================
+
+states = {
+  20: {
+      "name": "Maharashtra",
+      "districts": {
+            338: "Ahmednagar",
+            339: "Akola",
+            340: "Amarawati",
+            342: "Beed",
+            343: "Bhandara",
+            344: "Buldhana",
+            345: "Chandrapur",
+            346: "Chattrapati Sambhajinagar",
+            347: "Dharashiv(Usmanabad)",
+            348: "Dhule",
+            349: "Gadchiroli",
+            350: "Gondiya",
+            351: "Hingoli",
+            352: "Jalana",
+            353: "Jalgaon",
+            354: "Kolhapur",
+            355: "Latur",
+            356: "Mumbai",
+            358: "Nagpur",
+            359: "Nanded",
+            360: "Nandurbar",
+            361: "Nashik",
+            363: "Parbhani",
+            364: "Pune",
+            365: "Raigad",
+            366: "Ratnagiri",
+            367: "Sangli",
+            368: "Satara",
+            369: "Sholapur",
+            370: "Sindhudurg",
+            371: "Thane",
+            372: "Vashim",
+            373: "Wardha",
+            374: "Yavatmal"
+      }
+  }
+}
+
+commodities = {
+    1: {
+        "name": "Cereals",
+        "commodities": {
+            28: "Bajra(Pearl Millet/Cumbu)",
+            4: "Maize",
+            3: "Rice",
+            1: "Wheat"
+        }
+    },
+    2: {
+        "name": "Pulses",
+        "commodities": {
+            214: "Arhar Dal(Tur Dal)",
+            217: "Bengal Gram Dal(Chana Dal)",
+            219: "Green Gram Dal(Moong Dal)",
+            213: "Masur Dal",
+            79: "Mataki",
+            491: "Kidney Beans(Rajma)"
+        }
+    },
+    5: {
+        "name": "Fruits",
+        "commodities": {
+            18: "Orange",
+            60: "Water Melon",
+            17: "Apple",
+            19: "Banana",
+            20: "Mango",
+            22: "Grapes"
+        }
+    },
+    6: {
+        "name": "Vegetables",
+        "commodities": {
+            24: "Potato",
+            23: "Onion",
+            65: "Tomato",
+            70: "Pumpkin",
+            73: "Green Chilli",
+            133: "Raddish"
+        }
+    },
+    7: {
+        "name": "Spices",
+        "commodities": {
+            34: "Black pepper",
+            26: "Chili Red",
+            267: "Cinamon(Dalchini)",
+            27: "Ginger(Dry)",
+            35: "Turmeric"
+        }
+    }
+}
+
+
+def lookup(data="default"):
+    reverse_dict = {}
+    if data == "states":
+        for state_id, state_info in states.items():
+            reverse_dict[state_info["name"].lower()] = state_id
+            for district_id, district_name in state_info["districts"].items():
+                reverse_dict[district_name.lower()] = district_id
+    elif data == "commodities":
+        for category_id, category_info in commodities.items():
+            reverse_dict[category_info["name"].lower()] = category_id
+            for item_id, item_name in category_info["commodities"].items():
+                reverse_dict[item_name.lower()] = item_id
+    return reverse_dict
+
+
+def get_id(name, data, lookup_type="default"):
+    if lookup_type == "default":
+        lookup_dict = lookup(data)
+    elif lookup_type == "lookup":
+        lookup_dict = data
+    else:
+        return None
+    if lookup_dict:
+        return lookup_dict.get(name.lower())
+    return None
+
+
+def get_response(
+        req_type=3, msp=0, period="date", page=1, options=2, 
+        limit=10, 
+        state=[], district=[], market=[], 
+        group=[], commodity=[], 
+        from_date=date.today(), to_date=date.today()
+):
+    url = "https://api.agmarknet.gov.in/v1/all-type-report/all-type-report-agm"
+    params = {
+        "type": req_type,
+        "state": state,
+        "district": district if district else ["99999"],
+        "market": market,
+        "group": group,
+        "commodity": commodity if commodity else ["99999"],
+        "from_date": str(from_date),
+        "to_date": str(to_date),
+        "msp": msp,
+        "period": period,
+        "page": page,
+        "options": options,
+        "itemsPerPage": limit
+    }
+    headers = {
+        "User-Agent": "Mozilla/5.0",
+        "Accept": "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        "Origin": "https://agmarknet.gov.in",
+        "Referer": "https://agmarknet.gov.in/"
+    }
+    return requests.post(url, json=params, headers=headers, timeout=30)
+
+
+# ==========================================
+# 📈 DEMAND & SUPPLY: ANALYTICS ENGINE
+# ==========================================
+
+class MarketAnalytics:
+    def __init__(self, master_data_path):
+        self.df = pd.read_csv(master_data_path)
+        self.df['Date'] = pd.to_datetime(self.df['Date'])
+
+    def get_precision_baseline(self, district, commodity, target_date):
+        day_of_year = target_date.timetuple().tm_yday
+        subset = self.df[
+            (self.df['District'].str.lower() == district.lower()) & 
+            (self.df['Commodity'].str.lower() == commodity.lower())
+        ].copy()
+        subset['day_of_year'] = subset['Date'].dt.dayofyear
+        window_mask = (subset['day_of_year'] >= day_of_year - 7) & (subset['day_of_year'] <= day_of_year + 7)
+        precision_data = subset[window_mask]
+
+        if precision_data.empty:
+            return {"status": "Off-Season"}
+
+        mean_qty = precision_data['Arrival_Quantity'].mean()
+        std_qty = precision_data['Arrival_Quantity'].std()
+        mean_price = precision_data['Modal_Price'].mean()
+
+        return {
+            "baseline_qty": round(mean_qty, 2),
+            "std_qty": std_qty if std_qty > 0 else 1,
+            "baseline_price": round(mean_price, 2),
+            "status": "Active"
+        }
+
+    def calculate_precision_gap(self, live_qty, live_price, baseline):
+        if baseline['status'] == "Off-Season":
+            return {"condition": "Off-Season", "confidence": "N/A"}
+
+        z_score = (live_qty - baseline['baseline_qty']) / baseline['std_qty']
+        price_shift = ((live_price - baseline['baseline_price']) / baseline['baseline_price']) * 100
+
+        Z_THRESH = 1.0
+        BUFFER = 0.15
+        PRICE_SENSITIVITY = 5.0
+        SHOCK_THRESHOLD = 15.0
+
+        res = ""
+        conf = "High"
+
+        if z_score < -(Z_THRESH + BUFFER):
+            if price_shift > PRICE_SENSITIVITY:
+                res = "Confirmed Shortage (High Demand Pull)"
+                conf = "High"
+            else:
+                res = "Supply Dip (Weak Market Interest)"
+                conf = "Moderate"
+        elif -(Z_THRESH + BUFFER) <= z_score <= -(Z_THRESH - BUFFER):
+            res = "Trending Towards Shortage"
+            conf = "Moderate"
+        elif z_score > (Z_THRESH + BUFFER):
+            if price_shift < -PRICE_SENSITIVITY:
+                res = "Confirmed Surplus (Market Glut)"
+                conf = "High"
+            else:
+                res = "Supply Surge (Stable Prices)"
+                conf = "Moderate"
+        elif (Z_THRESH - BUFFER) <= z_score <= (Z_THRESH + BUFFER):
+            res = "Trending Towards Surplus"
+            conf = "Moderate"
+        else:
+            if price_shift > SHOCK_THRESHOLD:
+                res = "Demand Shock (Supply Normal, Price High)"
+                conf = "Moderate"
+            elif price_shift < -SHOCK_THRESHOLD:
+                res = "Demand Slump (Supply Normal, Price Low)"
+                conf = "Moderate"
+            else:
+                res = "Market Equilibrium (Normal Variance)"
+                conf = "High"
+
+        if "Shortage" in res and price_shift < 0:
+            res += " - Warning: Price Not Rising"
+            conf = "Low"
+        elif "Surplus" in res and price_shift > 0:
+            res += " - Warning: Price Resilient"
+            conf = "Low"
+
+        return {
+            "z_score": round(z_score, 2),
+            "supply_gap_pct": round(((live_qty - baseline['baseline_qty'])/baseline['baseline_qty'])*100, 2),
+            "price_shift_pct": round(price_shift, 2),
+            "condition": res,
+            "confidence": conf
+        }
+
+# Initialize the "Market Memory"
+MARKET_DATA_PATH = BASE_DIR / "demand-and-supply" / "datasets" / "unified_market_data.csv"
+market_engine = MarketAnalytics(MARKET_DATA_PATH)
+states_lookup = lookup(data="states")
+comm_lookup = lookup(data="commodities")
+
+def run_market_report(district_name, commodity_name, category_name, input_date):
+    dist_id = get_id(district_name, states_lookup, lookup_type="lookup")
+    comm_id = get_id(commodity_name, comm_lookup, lookup_type="lookup")
+    group_id = get_id(category_name, comm_lookup, lookup_type="lookup")
+    
+    if dist_id is None or comm_id is None or group_id is None:
+        return {"error": f"Invalid Selection: Check if '{district_name}', '{commodity_name}' or '{category_name}' is correct."}
+    
+    maharashtra_id = 20
+    live_data = None
+    found_date = None
+    
+    for i in range(0, 6):
+        search_date = input_date - timedelta(days=i)
+        try:
+            response = get_response(
+                state=[maharashtra_id], 
+                district=[dist_id], 
+                group=[group_id], 
+                commodity=[comm_id], 
+                from_date=search_date, 
+                to_date=search_date
+            )
+            
+            if response.status_code == 200:
+                res_json = response.json()
+                if res_json.get("success") and res_json.get("rows"):
+                    live_data = res_json.get("rows")[0]
+                    found_date = search_date
+                    break
+        except Exception as e:
+            continue
+            
+    if not live_data:
+        return {"error": "No recent data found in Agmarknet for this selection."}
+
+    current_qty = float(live_data.get("cumm_arr", 0))
+    current_price_tonne = float(live_data.get("model_price_wt", 0)) * 10
+    baseline = market_engine.get_precision_baseline(district_name, commodity_name, found_date)
+    analysis = market_engine.calculate_precision_gap(current_qty, current_price_tonne, baseline)
+    
+    return {
+        "date_found": str(found_date),
+        "live_supply": current_qty,
+        "live_price": current_price_tonne,
+        "baseline_qty": baseline.get('baseline_qty', 0),
+        "baseline_price": baseline.get('baseline_price', 0),
+        "analysis": analysis
+    }
+
+
+# ==========================================
+# 📈 DEMAND & SUPPLY: RECOMMENDATION ENGINE
+# ==========================================
+
+class FarmerAdvisor:
+    def __init__(self):
+        self.api_key = "gsk_dqHS3Af187AIaKP0hqilWGdyb3FYasxRpxJ8aLMOjlk5jLsyxpY"
+        self.url = "https://api.groq.com/openai/v1/chat/completions"
+
+    def generate_advice(self, crop, district, analysis_results):
+        condition = analysis_results['condition']
+        confidence = analysis_results['confidence']
+        gap = analysis_results['supply_gap_pct']
+        price_shift = analysis_results['price_shift_pct']
+
+        system_msg = (
+            "You are a precise agricultural decision-support tool. "
+            "Provide exactly 3 direct, actionable sentences. "
+            "Each sentence MUST be on a new line. "
+            "Do not use bolding (**), italics, or introductory phrases like 'Based on...' or 'I recommend...'. "
+            "Do not refer to yourself as an AI or an economist. Speak directly to the farmer."
+        )
+
+        user_msg = f"""
+        Data for {crop} in {district}:
+        - Market Status: {condition}
+        - Supply Gap: {gap}% (Negative means less supply than usual and Positive means more supply than usual)
+        - Price Shift: {price_shift}% (Negative means price is falling and Positive means price is rising)
+        - Data Confidence: {confidence}
+
+        Instructions:
+        1. Evaluate if they should sell, hold, or wait.
+        2. Identify the risk/opportunity clearly.
+        3. Suggest one practical next step.
+        Keep it professional, helpful and precise.
+        """
+
+        payload = {
+            "model": "llama-3.1-8b-instant",
+            "messages": [
+                {"role": "system", "content": system_msg},
+                {"role": "user", "content": user_msg}
+            ],
+            "temperature": 0.5
+        }
+        
+        headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
+
+        try:
+            response = requests.post(self.url, json=payload, headers=headers, timeout=10)
+            data = response.json()
+            if "choices" in data:
+                return data['choices'][0]['message']['content'].strip()
+            return f"Strategic Status: {condition}. Confidence: {confidence}."
+        except Exception:
+            return "Market analysis suggests cautious trading. Monitor local price trends daily."
+
+
+# ==========================================
+# 📈 DEMAND & SUPPLY: MAIN LOGIC WRAPPER
+# ==========================================
+
+def execute_demand_supply(district: str, commodity: str, category: str, target_date_str: str = None) -> dict:
+    if target_date_str:
+        try:
+            query_date = datetime.strptime(target_date_str, "%Y-%m-%d").date()
+        except ValueError:
+            query_date = date.today()
+    else:
+        query_date = date.today()
+        
+    report = run_market_report(district, commodity, category, query_date)
+    
+    if "error" in report:
+        return {"status": "error", "error": report["error"]}
+        
+    if report["analysis"]["condition"] != "Off-Season":
+        advisor = FarmerAdvisor()
+        advice = advisor.generate_advice(commodity, district, report["analysis"])
+    else:
+        advice = "The crop is currently out of season; no actionable insights."
+
+    return {
+        "status": "success",
+        "date_found": report["date_found"],
+        "live_supply": report["live_supply"],
+        "live_price": report["live_price"],
+        "baseline_qty": report["baseline_qty"],
+        "baseline_price": report["baseline_price"],
+        "analysis": report["analysis"],
+        "recommendation": advice
+    }
 
 
 
