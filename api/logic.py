@@ -671,11 +671,18 @@ def get_response(
         "itemsPerPage": limit
     }
     headers = {
-        "User-Agent": "Mozilla/5.0",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         "Accept": "application/json, text/plain, */*",
         "Content-Type": "application/json",
         "Origin": "https://agmarknet.gov.in",
-        "Referer": "https://agmarknet.gov.in/"
+        "Referer": "https://agmarknet.gov.in/",
+        "Sec-Ch-Ua": '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Sec-Ch-Ua-Platform": '"Windows"',
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-site",
+        "Accept-Language": "en-US,en;q=0.9"
     }
     return requests.post(url, json=params, headers=headers, timeout=30, verify=False)
 
@@ -792,6 +799,7 @@ def run_market_report(district_name, commodity_name, category_name, input_date):
     live_data = None
     found_date = None
     data_source = "agmarknet_live"
+    live_errors = []
     
     for i in range(0, 6):
         search_date = input_date - timedelta(days=i)
@@ -811,10 +819,19 @@ def run_market_report(district_name, commodity_name, category_name, input_date):
                     live_data = res_json.get("rows")[0]
                     found_date = search_date
                     break
+                else:
+                    live_errors.append(f"Day {i} [{search_date}]: Success but no rows returned.")
+            else:
+                live_errors.append(f"Day {i} [{search_date}]: HTTP {response.status_code} - {response.text}")
         except Exception as e:
+            live_errors.append(f"Day {i} [{search_date}] Exception: {type(e).__name__} - {str(e)}")
             continue
             
     if not live_data:
+        print(f"\n--- AGMARKNET LIVE API BLOCK DIAGNOSTICS ({district_name} | {commodity_name}) ---")
+        for err in live_errors:
+            print(err)
+        print("---------------------------------------------------\n")
         subset = market_engine.df[
             (market_engine.df['District'].str.lower() == district_name.lower()) & 
             (market_engine.df['Commodity'].str.lower() == commodity_name.lower())
