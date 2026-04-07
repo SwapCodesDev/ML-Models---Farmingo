@@ -16,6 +16,7 @@ from datetime import datetime
 import pickle
 import json
 import re
+import time
 from functools import lru_cache
 from pathlib import Path
 
@@ -357,8 +358,20 @@ COMMODITY_MAP = {
 # ==============================
 API_KEY = "579b464db66ec23bdd0000019cbc42efd27b401673aa06ae28eb5b4d"
 
+_API_CACHE = {}
+CACHE_TTL = 3600  # 1 hour
+
 def fetch_data(state):
     url = "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070"
+
+    current_time = time.time()
+
+    # Check Cache
+    if state in _API_CACHE:
+        cached_time, cached_data = _API_CACHE[state]
+        if current_time - cached_time < CACHE_TTL:
+            print(f"API Cache hit for state: {state}")
+            return cached_data
 
     params = {
         "api-key": API_KEY,
@@ -367,15 +380,29 @@ def fetch_data(state):
         "filters[state]": state
     }
 
-    try:
-        r = requests.get(url, params=params)
-        r.raise_for_status()
-        data = r.json()
-    except Exception as e:
-        print("API Error:", e)
-        return []
+    retries = 3
+    for attempt in range(retries):
+        try:
+            r = requests.get(url, params=params, timeout=15)
+            r.raise_for_status()
+            data = r.json()
+            records = data.get("records", [])
 
-    return data.get("records", [])
+            # Save to cache
+            _API_CACHE[state] = (current_time, records)
+            return records
+
+        except Exception as e:
+            if attempt == retries - 1:
+                print(f"API Error after {retries} attempts for state {state}:", e)
+                return []
+            
+            # Exponential Backoff: 2s, 4s
+            sleep_time = 2 ** (attempt + 1)
+            print(f"API attempt {attempt+1} failed ({e}). Retrying in {sleep_time}s...")
+            time.sleep(sleep_time)
+
+    return []
 
 
 # ==============================
