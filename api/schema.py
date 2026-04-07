@@ -44,6 +44,7 @@ class DemandSupplyAnalysis(BaseModel):
 class DemandSupplyResponse(BaseModel):
     status: str
     date_found: Optional[str] = None
+    data_source: Optional[str] = None
     live_supply: Optional[float] = None
     live_price: Optional[float] = None
     baseline_qty: Optional[float] = None

@@ -677,7 +677,7 @@ def get_response(
         "Origin": "https://agmarknet.gov.in",
         "Referer": "https://agmarknet.gov.in/"
     }
-    return requests.post(url, json=params, headers=headers, timeout=30)
+    return requests.post(url, json=params, headers=headers, timeout=30, verify=False)
 
 
 # ==========================================
@@ -791,6 +791,7 @@ def run_market_report(district_name, commodity_name, category_name, input_date):
     maharashtra_id = 20
     live_data = None
     found_date = None
+    data_source = "agmarknet_live"
     
     for i in range(0, 6):
         search_date = input_date - timedelta(days=i)
@@ -814,15 +815,31 @@ def run_market_report(district_name, commodity_name, category_name, input_date):
             continue
             
     if not live_data:
-        return {"error": "No recent data found in Agmarknet for this selection."}
-
-    current_qty = float(live_data.get("cumm_arr", 0))
-    current_price_tonne = float(live_data.get("model_price_wt", 0)) * 10
+        subset = market_engine.df[
+            (market_engine.df['District'].str.lower() == district_name.lower()) & 
+            (market_engine.df['Commodity'].str.lower() == commodity_name.lower())
+        ].copy()
+        
+        if not subset.empty:
+            subset = subset.sort_values(by='Date', ascending=False)
+            recent_row = subset.iloc[0]
+            
+            current_qty = float(recent_row['Arrival_Quantity'])
+            current_price_tonne = float(recent_row['Modal_Price'])
+            found_date = recent_row['Date'].date()
+            data_source = "offline_database_fallback"
+        else:
+            return {"error": "No recent data found in Agmarknet and no history found in the database."}
+    else:
+        current_qty = float(live_data.get("cumm_arr", 0))
+        current_price_tonne = float(live_data.get("model_price_wt", 0)) * 10
+        
     baseline = market_engine.get_precision_baseline(district_name, commodity_name, found_date)
     analysis = market_engine.calculate_precision_gap(current_qty, current_price_tonne, baseline)
     
     return {
         "date_found": str(found_date),
+        "data_source": data_source,
         "live_supply": current_qty,
         "live_price": current_price_tonne,
         "baseline_qty": baseline.get('baseline_qty', 0),
@@ -916,6 +933,7 @@ def execute_demand_supply(district: str, commodity: str, category: str, target_d
     return {
         "status": "success",
         "date_found": report["date_found"],
+        "data_source": report["data_source"],
         "live_supply": report["live_supply"],
         "live_price": report["live_price"],
         "baseline_qty": report["baseline_qty"],
