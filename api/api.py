@@ -26,8 +26,8 @@ if api_dir not in sys.path:
 # Internal imports
 
 from schema import (
-    CropPriceInput, 
-    CropPriceOutput, 
+    PricePredictionRequest,
+    PricePredictionResponse,
     WeatherSoilData,
     CropRequest, 
     CropResponse, 
@@ -44,7 +44,7 @@ from logic import (
     predict_crop,
     recommend_alternatives,
     predict_disease,
-    predict_crop_price
+    predict_price_logic
 )
 
 app = FastAPI(
@@ -202,12 +202,13 @@ async def predict_crop_disease(crop_name: str, file: UploadFile = File(...)):
 
 
 # Endpoint: Crop Price Prediction
-@app.post("/crop_price", response_model=CropPriceOutput)
-def predict(data: CropPriceInput):
-    price = predict_crop_price(data.crop, data.region, data.date)
-    return CropPriceOutput(
-        crop=data.crop,
-        region=data.region,
-        date=data.date,
-        price=float(price)
-    )
+@app.post("/price_prediction", response_model=PricePredictionResponse)
+async def predict_price(request: PricePredictionRequest):
+    try:
+        result = predict_price_logic(request.lat, request.lon, request.commodity)
+        return PricePredictionResponse(**result)
+    except Exception as e:
+        return PricePredictionResponse(status="error", message=str(e))
+
+
+

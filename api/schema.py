@@ -1,18 +1,27 @@
 from pydantic import BaseModel
-from typing import List, Dict
+from typing import List, Dict, Optional
 
-# Crop Price Prediction Models
+# Price Prediction Models
 
-class CropPriceInput(BaseModel):
-    crop: str
-    region: str
-    date: str  # ISO format date string
+class PricePredictionRequest(BaseModel):
+    lat: float
+    lon: float
+    commodity: str = "chilli"
 
-class CropPriceOutput(BaseModel):
-    crop: str
-    region: str
-    date: str   # ISO format date string
-    price: float
+
+class PricePredictionResponse(BaseModel):
+    status: str
+    state: Optional[str] = None
+    total_records: Optional[int] = None
+    filtered_count: Optional[int] = None
+    data: Optional[list] = None
+    base_price: Optional[float] = None
+    max_price: Optional[float] = None
+    base_price_kg: Optional[float] = None
+    max_price_kg: Optional[float] = None
+    excel_min: Optional[float] = None
+    excel_max: Optional[float] = None
+    message: Optional[str] = None
 
 # Weather Data Models
 
