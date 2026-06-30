@@ -148,5 +148,5 @@ Example response:
 
 ## For source code of Crop Prediction Model
 ```
-https://github.com/SwapCodesDev/ML-Models---Farmingo
+https://github.com/SwapCodesDev/farmingo-api
 ```

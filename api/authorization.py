@@ -1,4 +1,7 @@
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import HTTPException, Header
 
 api_key=os.getenv("FARMINGO_API_KEY")

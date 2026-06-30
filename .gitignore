@@ -3,3 +3,4 @@
 .testing/
 .env
 .env.*
+!.env.example

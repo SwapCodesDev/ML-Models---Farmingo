@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import (
     FastAPI, 
     Request, 
@@ -37,6 +40,7 @@ from schema import (
 )
 
 from authorization import validate_api_key
+from paths import INDEX_HTML_PATH
 
 from logic import (
     reverse_geocode_state,
@@ -77,14 +81,10 @@ app.add_middleware(
 # Use app.state (thread-safe)
 app.state.user_location = {"latitude": None, "longitude": None}
 
-# Base directory
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-
 # Serve frontend
 @app.get("/", response_class=HTMLResponse)
 async def serve_homepage():
-    return FileResponse(os.path.join(BASE_DIR, "index.html"))
+    return FileResponse(INDEX_HTML_PATH)
 
 # Endpoint: Health Check
 @app.get("/health")

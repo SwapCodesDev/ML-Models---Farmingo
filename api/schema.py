@@ -12,6 +12,7 @@ class PricePredictionRequest(BaseModel):
 class PricePredictionResponse(BaseModel):
     status: str
     state: Optional[str] = None
+    district: Optional[str] = None
     total_records: Optional[int] = None
     filtered_count: Optional[int] = None
     data: Optional[list] = None

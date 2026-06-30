@@ -1,4 +1,7 @@
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"   # MUST be before importing TF
 
 import warnings
@@ -19,32 +22,20 @@ import re
 import time
 import cloudscraper
 from functools import lru_cache
-from pathlib import Path
+from paths import (
+    PRICE_DATA_PATH,
+    INFO_JSON_FOLDER,
+    MODEL_FOLDER,
+    MODEL_PATH,
+    STATE_ENCODER_PATH,
+    CROP_ENCODER_PATH,
+    MARKET_DATA_PATH
+)
 
 
-# Path setup
-
-# Base: project root
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-PRICE_DATA_PATH = BASE_DIR / "crop-price-prediction" / "datasets" / "wholesale_commodity_prices.xlsx"
 df_prices = pd.read_excel(PRICE_DATA_PATH)
 df_prices['State'] = df_prices['State'].astype(str).str.strip().str.lower()
 df_prices['Commodity'] = df_prices['Commodity'].astype(str).str.strip().str.lower()
-
-# Model directories
-
-CROP_DISEASE_PREDICTION_DIR = BASE_DIR / "crop-disease-prediction" / "backup"
-WEATHER_PREDICTION_DIR = BASE_DIR / "weather-prediction" / "backup"
-
-# --- Weather Prediction ---
-MODEL_PATH = WEATHER_PREDICTION_DIR / "xgboost_model.pkl"
-STATE_ENCODER_PATH = WEATHER_PREDICTION_DIR / "state_encoder.pkl"
-CROP_ENCODER_PATH = WEATHER_PREDICTION_DIR / "crop_encoder.pkl"
-
-# --- Crop Disease Prediction ---
-INFO_JSON_FOLDER = CROP_DISEASE_PREDICTION_DIR / "info_json"
-MODEL_FOLDER = CROP_DISEASE_PREDICTION_DIR / "trained_models"
 
 
 
@@ -167,6 +158,39 @@ def reverse_geocode_state(lat: float, lon: float) -> str:
     return address.get("country", "Unknown").title()
 
 
+@lru_cache(maxsize=256)
+def reverse_geocode_state_district(lat: float, lon: float) -> tuple:
+    url = "https://nominatim.openstreetmap.org/reverse"
+    params = {
+        "format": "jsonv2",
+        "lat": lat,
+        "lon": lon,
+        "zoom": 10,
+        "addressdetails": 1,
+    }
+
+    try:
+        r = requests.get(url, params=params, timeout=10, headers={"User-Agent": "Farmingo/1.0"})
+        r.raise_for_status()
+        address = r.json().get("address", {})
+    except Exception:
+        return "Unknown", "Unknown"
+
+    state = "Unknown"
+    for k in ("state", "region", "province"):
+        if k in address:
+            state = address[k].title()
+            break
+
+    district = "Unknown"
+    for k in ("state_district", "district", "county", "city", "suburb", "town"):
+        if k in address:
+            district = address[k].title()
+            break
+
+    return state, district
+
+
 # 2. WEATHER API
 @lru_cache(maxsize=256)
 def fetch_open_meteo(lat: float, lon: float):
@@ -284,13 +308,13 @@ def recommend_alternatives(predicted: str, state: str):
 # 7. DISEASE PREDICTION
 @lru_cache(maxsize=128)
 def load_disease_info(crop):
-    path = os.path.join(INFO_JSON_FOLDER, f"{crop}_disease_info.json")
+    path = INFO_JSON_FOLDER / f"{crop}_disease_info.json"
     with open(path, "r") as f:
         return json.load(f)
 
 @lru_cache(maxsize=64)
 def load_crop_model(crop):
-    path = os.path.join(MODEL_FOLDER, f"{crop}_leaf_disease_classifier.h5")
+    path = MODEL_FOLDER / f"{crop}_leaf_disease_classifier.h5"
     return tf.keras.models.load_model(path)
 
 def predict_disease(crop: str, image_path: str) -> dict:
@@ -326,76 +350,158 @@ def predict_disease(crop: str, image_path: str) -> dict:
 # 🌶️ Commodity Map
 # ==============================
 COMMODITY_MAP = {
-    "onion": ["onion", "onion dry", "onion green"],
-    "tomato": ["tomato", "tomato hybrid"],
-    "potato": ["potato"],
-    "cabbage": ["cabbage"],
-    "carrot": ["carrot"],
-    "chilli": ["chilli", "green chilli", "red chilli"],
-    "brinjal": ["brinjal"],
-    "cucumber": ["cucumber"],
-    "cauliflower": ["cauliflower"],
-    "beetroot": ["beetroot", "beet"],
-    "bhindi": ["bhindi", "bhendi", "ladies finger"],
-    "garlic": ["garlic"],
-    "ginger": ["ginger"],
-    "sweet potato": ["sweet potato"],
-    "spring onion": ["spring onion"],
-    "spinach": ["spinach"],
-    "methi": ["methi", "fenugreek"],
-    "coriander leaves": ["coriander leaves", "dhaniya"],
-    "bottle gourd": ["bottle gourd", "lauki"],
-    "ridge gourd": ["ridge gourd", "turai"],
-    "bitter gourd": ["bitter gourd", "karela"],
-    "snake gourd": ["snake gourd"],
-    "drumstick": ["drumstick"],
-    "pumpkin": ["pumpkin"],
-    "capsicum": ["capsicum", "bell pepper"],
+    # Vegetables
+    "Onion": {"api_names": ["onion", "onion dry", "onion green"]},
+    "Tomato": {"api_names": ["tomato", "tomato hybrid"]},
+    "Potato": {"api_names": ["potato"]},
+    "Cabbage": {"api_names": ["cabbage"]},
+    "Carrot": {"api_names": ["carrot"]},
+    "Chilli": {"api_names": ["chilli", "green chilli", "red chilli"]},
+    "Brinjal": {"api_names": ["brinjal"]},
+    "Cucumber": {"api_names": ["cucumber"]},
+    "Cauliflower": {"api_names": ["cauliflower"]},
+    "Beetroot": {"api_names": ["beetroot", "beet"]},
+    "Bhendi (Okra)": {"api_names": ["bhindi", "bhendi", "ladies finger"]},
+    "Garlic": {"api_names": ["garlic"]},
+    "Ginger": {"api_names": ["ginger"]},
+    "Sweet Potato": {"api_names": ["sweet potato"]},
+    "Spring Onion": {"api_names": ["spring onion"]},
+    "Spinach": {"api_names": ["spinach"]},
+    "Fenugreek (Methi)": {"api_names": ["methi", "fenugreek"]},
+    "Coriander Leaves": {"api_names": ["coriander leaves", "dhaniya"]},
+    "Bottle Gourd": {"api_names": ["bottle gourd", "lauki"]},
+    "Ridge Gourd": {"api_names": ["ridge gourd", "turai"]},
+    "Bitter Gourd": {"api_names": ["bitter gourd", "karela"]},
+    "Snake Gourd": {"api_names": ["snake gourd"]},
+    "Drumstick": {"api_names": ["drumstick"]},
+    "Pumpkin": {"api_names": ["pumpkin"]},
+    "Capsicum": {"api_names": ["capsicum", "bell pepper"]},
+
+    # Fruits
+    "Apple": {"api_names": ["apple"]},
+    "Banana": {"api_names": ["banana"]},
+    "Orange": {"api_names": ["orange"]},
+    "Grapes": {"api_names": ["grapes"]},
+    "Watermelon": {"api_names": ["watermelon"]},
+    "Muskmelon": {"api_names": ["muskmelon"]},
+    "Mango": {"api_names": ["mango"]},
+    "Pineapple": {"api_names": ["pineapple"]},
+    "Papaya": {"api_names": ["papaya"]},
+    "Lemon": {"api_names": ["lemon"]},
+    "Guava": {"api_names": ["guava"]},
+    "Strawberry": {"api_names": ["strawberry"]},
+
+    # Grains
+    "Wheat": {"api_names": ["wheat"]},
+    "Rice": {"api_names": ["rice"]},
+    "Maize": {"api_names": ["maize"]},
+    "Barley": {"api_names": ["barley"]},
+    "Bajra": {"api_names": ["bajra"]},
+    "Jowar": {"api_names": ["jowar"]},
+
+    # Pulses
+    "Chana (Gram)": {"api_names": ["gram", "chana"]},
+    "Moong": {"api_names": ["moong"]},
+    "Urad": {"api_names": ["urad"]},
+    "Masoor": {"api_names": ["masoor"]},
+    "Arhar (Toor Dal)": {"api_names": ["arhar", "tur", "toor"]},
+
+    # Spices
+    "Red Chilli": {"api_names": ["red chilli"]},
+    "Turmeric": {"api_names": ["turmeric"]},
+    "Coriander Seeds": {"api_names": ["coriander"]},
+    "Cumin": {"api_names": ["cumin"]},
+    "Mustard": {"api_names": ["mustard"]},
+
+    # Oil Seeds
+    "Groundnut": {"api_names": ["groundnut", "peanut"]},
+    "Sunflower": {"api_names": ["sunflower"]},
+    "Soybean": {"api_names": ["soybean"]},
+    "Sesame": {"api_names": ["sesame"]},
+
+    # Others
+    "Sugarcane": {"api_names": ["sugarcane"]},
+    "Jaggery": {"api_names": ["jaggery"]},
+    "Tea": {"api_names": ["tea"]},
+    "Coffee": {"api_names": ["coffee"]},
 }
+
+
+def resolve_commodity_key(input_commodity: str) -> str:
+    input_clean = input_commodity.strip().lower()
+    
+    # 1. Check direct matches on keys (case-insensitive)
+    for key in COMMODITY_MAP.keys():
+        if key.strip().lower() == input_clean:
+            return key
+            
+    # 2. Check direct match inside api_names lists
+    for key, value in COMMODITY_MAP.items():
+        if input_clean in [name.strip().lower() for name in value["api_names"]]:
+            return key
+            
+    # 3. Substring match fallback
+    for key, value in COMMODITY_MAP.items():
+        for name in value["api_names"]:
+            name_clean = name.strip().lower()
+            if input_clean in name_clean or name_clean in input_clean:
+                return key
+                
+    raise ValueError(f"Commodity '{input_commodity}' not found in COMMODITY_MAP")
 
 
 # ==============================
 # 📦 Fetch Data
 # ==============================
-API_KEY = "579b464db66ec23bdd0000019cbc42efd27b401673aa06ae28eb5b4d"
+API_KEY = os.getenv("DATA_GOV_API_KEY")
 
 _API_CACHE = {}
 CACHE_TTL = 3600  # 1 hour
 
-def fetch_data(state):
+def fetch_data(state: str, district: str):
     url = "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070"
 
     current_time = time.time()
+    cache_key = (state.lower(), district.lower())
 
     # Check Cache
-    if state in _API_CACHE:
-        cached_time, cached_data = _API_CACHE[state]
+    if cache_key in _API_CACHE:
+        cached_time, cached_data = _API_CACHE[cache_key]
         if current_time - cached_time < CACHE_TTL:
-            print(f"API Cache hit for state: {state}")
+            print(f"API Cache hit for state/district: {state}/{district}")
             return cached_data
 
     params = {
         "api-key": API_KEY,
         "format": "json",
         "limit": 1000,
-        "filters[state]": state
+        "filters[state]": state,
+        "filters[district]": district
     }
 
     retries = 3
     for attempt in range(retries):
         try:
-            r = requests.get(url, params=params, timeout=15)
+            r = requests.get(
+                url, 
+                params=params, 
+                headers={
+                    "User-Agent": "Mozilla/5.0",
+                    "Accept": "application/json"
+                },
+                timeout=60
+            )
             r.raise_for_status()
             data = r.json()
             records = data.get("records", [])
 
             # Save to cache
-            _API_CACHE[state] = (current_time, records)
+            _API_CACHE[cache_key] = (current_time, records)
             return records
 
         except Exception as e:
             if attempt == retries - 1:
-                print(f"API Error after {retries} attempts for state {state}:", e)
+                print(f"API Error after {retries} attempts for state/district {state}/{district}:", e)
                 return []
             
             # Exponential Backoff: 2s, 4s
@@ -409,21 +515,41 @@ def fetch_data(state):
 # ==============================
 # 🔍 Filter Commodity
 # ==============================
-def filter_data(data, commodity):
-    aliases = COMMODITY_MAP.get(commodity.lower(), [commodity.lower()])
+def filter_data(data, resolved_commodity_key):
+    api_names = {
+        name.strip().lower()
+        for name in COMMODITY_MAP[resolved_commodity_key]["api_names"]
+    }
+
+    # Filter for all mapped commodity names
+    filtered_records = [
+        rec for rec in data
+        if rec.get("commodity", "").strip().lower() in api_names
+    ]
+
+    # Remove duplicates
+    unique = {}
+    for rec in filtered_records:
+        key = (
+            rec.get("state"),
+            rec.get("district"),
+            rec.get("market"),
+            rec.get("commodity"),
+            rec.get("arrival_date")
+        )
+        unique[key] = rec
+
+    filtered_records = list(unique.values())
+
     result = []
-
-    for row in data:
-        item = row.get("commodity", "").lower()
-
-        if any(alias in item for alias in aliases):
-            result.append({
-                "date": row.get("arrival_date"),
-                "district": row.get("district"),
-                "market": row.get("market"),
-                "commodity": row.get("commodity"),
-                "price": row.get("modal_price")
-            })
+    for rec in filtered_records:
+        result.append({
+            "date": rec.get("arrival_date"),
+            "district": rec.get("district"),
+            "market": rec.get("market"),
+            "commodity": rec.get("commodity"),
+            "price": rec.get("modal_price")
+        })
 
     return result
 
@@ -489,21 +615,36 @@ def get_excel_prices(state, commodity):
 # 🏠 PREDICT LOGIC
 # ==============================
 def predict_price_logic(lat: float, lon: float, commodity: str = "chilli"):
-    state = reverse_geocode_state(lat, lon)
+    state, district = reverse_geocode_state_district(lat, lon)
 
     if state == "Unknown":
         raise Exception("State detection failed")
 
-    all_data = fetch_data(state)
-    filtered = filter_data(all_data, commodity)
+    # Clean names
+    clean_state = state.replace(" State", "").replace(" District", "").replace(" Division", "").strip()
+    clean_district = district.replace(" State", "").replace(" District", "").replace(" Division", "").strip()
+
+    # Resolve commodity key from user input
+    try:
+        resolved_key = resolve_commodity_key(commodity)
+    except ValueError as e:
+        raise Exception(str(e))
+
+    all_data = fetch_data(clean_state, clean_district)
+    filtered = filter_data(all_data, resolved_key)
 
     base_price, max_price = compute_prices(filtered)
 
-    excel_min, excel_max = get_excel_prices(state, commodity)
+    # Excel matching uses the clean name for lookup
+    excel_min, excel_max = get_excel_prices(clean_state, resolved_key)
+    if excel_min is None and excel_max is None:
+        primary_name = COMMODITY_MAP[resolved_key]["api_names"][0]
+        excel_min, excel_max = get_excel_prices(clean_state, primary_name)
 
     output = {
         "status": "success",
-        "state": state,
+        "state": clean_state,
+        "district": clean_district,
         "total_records": len(all_data),
         "filtered_count": len(filtered),
         "data": filtered[:10],
@@ -786,7 +927,6 @@ class MarketAnalytics:
         }
 
 # Initialize the "Market Memory"
-MARKET_DATA_PATH = BASE_DIR / "demand-and-supply" / "datasets" / "unified_market_data.csv"
 market_engine = MarketAnalytics(MARKET_DATA_PATH)
 states_lookup = lookup(data="states")
 comm_lookup = lookup(data="commodities")
@@ -875,7 +1015,7 @@ def run_market_report(district_name, commodity_name, category_name, input_date):
 
 class FarmerAdvisor:
     def __init__(self):
-        self.api_key = "gsk_dqHS3Af187AIaKP0hqilWGdyb3FYasxRpxJ8aLMOjlk5jLsyxpY"
+        self.api_key = os.getenv("GROQ_API_KEY")
         self.url = "https://api.groq.com/openai/v1/chat/completions"
 
     def generate_advice(self, crop, district, analysis_results):
